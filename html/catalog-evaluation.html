@@ -1,0 +1,2173 @@
+<title>What a Catalog Owes You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+  :root {
+    --bg:        #F1F4F7;
+    --surface:   #FFFFFF;
+    --surface-2: #E8EDF2;
+    --ink:       #101821;
+    --muted:     #5B6875;
+    --line:      #D3DBE3;
+    --line-soft: #E3E9EF;
+    --accent:    #22406A;
+    --iceberg:   #146C8C;
+    --delta:     #A9501C;
+    --warn:      #8A6A12;
+    --bad:       #97361F;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0D1319;
+      --surface:   #141C25;
+      --surface-2: #1B242F;
+      --ink:       #E3EAF1;
+      --muted:     #94A3B1;
+      --line:      #26323E;
+      --line-soft: #1E2833;
+      --accent:    #8FB2DE;
+      --iceberg:   #58BADA;
+      --delta:     #E39160;
+      --warn:      #D9B45C;
+      --bad:       #E0765A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:        #0D1319;
+    --surface:   #141C25;
+    --surface-2: #1B242F;
+    --ink:       #E3EAF1;
+    --muted:     #94A3B1;
+    --line:      #26323E;
+    --line-soft: #1E2833;
+    --accent:    #8FB2DE;
+    --iceberg:   #58BADA;
+    --delta:     #E39160;
+    --warn:      #D9B45C;
+    --bad:       #E0765A;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 28px 96px; }
+  .prose { max-width: 68ch; }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 3.1rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.45rem, 3vw, 1.95rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.02rem;
+    letter-spacing: 0.005em;
+    margin: 0 0 8px;
+  }
+  p { margin: 0 0 15px; }
+  .prose p, .prose li { color: var(--ink); }
+  .lede {
+    font-family: var(--serif);
+    font-size: 1.24rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 26px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+  code, .m { font-family: var(--mono); font-size: 0.855em; }
+  .prose code {
+    background: var(--surface-2);
+    border-radius: 3px;
+    padding: 0.1em 0.34em;
+  }
+  a { color: var(--accent); }
+
+  header.masthead {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 30px;
+    margin-bottom: 42px;
+  }
+  section { margin: 0 0 58px; }
+  section > .prose > h2 { margin-top: 0; }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    margin-bottom: 20px;
+  }
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    flex: none;
+    padding-top: 6px;
+  }
+
+  figure { margin: 26px 0 30px; }
+  figure svg { display: block; width: 100%; max-width: 100%; height: auto; }
+  figcaption {
+    font-size: 0.845rem;
+    color: var(--muted);
+    margin-top: 12px;
+    max-width: 72ch;
+    line-height: 1.5;
+  }
+  .figbox {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 20px 22px 16px;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    padding: 16px 20px;
+    margin: 22px 0;
+    max-width: 72ch;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.delta { border-left-color: var(--delta); }
+  .callout.ice { border-left-color: var(--iceberg); }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.875rem; }
+  th, td {
+    text-align: left;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+  thead th {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+    background: var(--surface-2);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.dim { font-weight: 500; min-width: 190px; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .note { font-size: 0.82rem; color: var(--muted); margin-top: 10px; max-width: 72ch; }
+  tr.grp td {
+    background: var(--surface-2);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .score { display: inline-flex; gap: 2px; vertical-align: middle; }
+  .score i {
+    width: 7px; height: 13px; display: block;
+    background: var(--line); border-radius: 1px;
+  }
+  .score.s1 i:nth-child(-n+1),
+  .score.s2 i:nth-child(-n+2),
+  .score.s3 i:nth-child(-n+3) { background: var(--accent); }
+  .score.ice.s1 i:nth-child(-n+1),
+  .score.ice.s2 i:nth-child(-n+2),
+  .score.ice.s3 i:nth-child(-n+3) { background: var(--iceberg); }
+  .score.dl.s1 i:nth-child(-n+1),
+  .score.dl.s2 i:nth-child(-n+2),
+  .score.dl.s3 i:nth-child(-n+3) { background: var(--delta); }
+  .sc { display: flex; align-items: center; gap: 9px; white-space: nowrap; }
+  .sc b { font-family: var(--mono); font-weight: 500; font-size: 0.78rem; color: var(--muted); }
+
+  .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 24px 0; }
+  .split > div { background: var(--surface); padding: 18px 20px; }
+  .split h3 { font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .split p { font-size: 0.9rem; margin-bottom: 0; }
+  .split .verdict { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.25; margin: 4px 0 8px; }
+  .verdict.ok { color: var(--iceberg); }
+  .verdict.no { color: var(--delta); }
+
+  ul.tight { margin: 0 0 15px; padding-left: 1.15em; }
+  ul.tight li { margin-bottom: 6px; }
+
+  .scope {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--muted);
+    background: var(--surface);
+    padding: 18px 22px 16px;
+    margin: 0 0 46px;
+    max-width: 78ch;
+  }
+  .scope .k { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 9px; }
+  .scope p { font-size: 0.9rem; line-height: 1.58; margin: 0 0 11px; }
+  .scope p:last-child { margin-bottom: 0; color: var(--muted); }
+
+  .defbox {
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    padding: 18px 22px;
+    margin: 4px 0 24px;
+    max-width: 72ch;
+  }
+  .defbox .deflabel { font-family: var(--mono); font-size: 0.69rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
+  .defbox .defbody { font-family: var(--serif); font-size: 1.34rem; line-height: 1.34; margin: 0 0 11px; }
+  .defbox .defeg { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+  .jobs { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 22px 0 30px; }
+  .jobs > div { background: var(--surface); padding: 16px 19px; }
+  .jobs .k { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 5px; }
+  .jobs .t { font-family: var(--serif); font-size: 1.14rem; font-weight: 600; margin: 0 0 9px; }
+  .jobs .d { font-size: 0.9rem; margin: 0 0 10px; }
+  .jobs .eg { font-size: 0.82rem; color: var(--muted); margin: 0; padding-top: 10px; border-top: 1px dotted var(--line); }
+
+  .rubric { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 22px 0; }
+  .rubric div { border-top: 2px solid var(--accent); padding-top: 10px; }
+  .rubric .k { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); }
+  .rubric .t { font-weight: 600; font-size: 0.95rem; margin: 2px 0 4px; }
+  .rubric .d { font-size: 0.85rem; color: var(--muted); line-height: 1.45; }
+
+  pre {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 13px 16px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.62;
+    white-space: pre;
+    tab-size: 2;
+  }
+  pre.good { border-left-color: var(--iceberg); }
+  pre.bad  { border-left-color: var(--delta); }
+  pre .c { color: var(--muted); }
+  pre .h { color: var(--accent); font-weight: 600; }
+  pre .g { color: var(--iceberg); font-weight: 600; }
+  pre .r { color: var(--delta); font-weight: 600; }
+
+  .dim-block { border-top: 1px solid var(--line); padding-top: 16px; margin-bottom: 40px; }
+  .dim-head { display: flex; gap: 13px; align-items: baseline; margin-bottom: 9px; }
+  .dim-head .k { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); flex: none; }
+  .dim-head h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0; letter-spacing: -0.005em; }
+  .dim-block > p { max-width: 68ch; font-size: 0.945rem; }
+  .test {
+    max-width: 68ch;
+    margin: 0 0 16px;
+    padding: 10px 0 0;
+    border-top: 1px dotted var(--line);
+    font-size: 0.93rem;
+  }
+  .test span {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 3px;
+  }
+  .codes { display: grid; gap: 16px; }
+  .codes.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); align-items: start; }
+  .cap {
+    font-family: var(--mono); font-size: 0.69rem; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 6px;
+  }
+  .cap.g { color: var(--iceberg); }
+  .cap.r { color: var(--delta); }
+
+  footer { border-top: 1px solid var(--line); padding-top: 18px; font-size: 0.82rem; color: var(--muted); max-width: 72ch; }
+  footer a { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Lakehouse platform · architecture note</p>
+  <h1>What a Catalog Owes You</h1>
+  <p class="lede">Thirteen dimensions that separate a catalog from a table listing, each with a test you can run — plus what Lake Formation actually adds to Glue, and which catalogs serve Delta and Iceberg equally.</p>
+  <p class="m" style="color:var(--muted); font-size:0.78rem;">Reviewed against Delta 4.1–4.3, Unity Catalog OSS 0.4, Apache Polaris 1.x, and AWS Glue as of September 2026.</p>
+</header>
+
+<div class="scope">
+  <p class="k">Scope</p>
+  <p><strong>This evaluates the technical catalog: who arbitrates writes, and who governs reads.</strong> It deliberately excludes the semantic and AI layer — metric and semantic views, natural-language query, agent context and retrieval, and the assistant features Databricks and Snowflake sell alongside their catalogs. Those are a different product category with different competitors, they move fast enough to date any comparison within months, and scoring them here would favour the two integrated platforms for reasons unrelated to the question these notes exist to answer.</p>
+  <p>Two things that exclusion does <em>not</em> mean. First, the layers are coupled at one seam that is already in scope: whatever semantic layer you adopt later will read column descriptions, tags, constraints, lineage and query history <em>out of the catalog</em> — so a catalog that captures none of those, or captures them unexportably, is a worse foundation for any choice you make above it. That is D7 and D9, scored below. Second, this is a snapshot, not a permanent boundary: semantic views and metric views are being moved into these catalogs as first-class objects, which will make them a D9 question before long — and those definitions will prove exactly as unportable as row filters. Same D12 problem, new asset type, and it tends to become load-bearing before anyone decides it should be.</p>
+</div>
+
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2 style="margin:0">Namespaces, and the words near them</h2></div>
+
+  <div class="prose">
+    <p>The rubric leans on "namespace" throughout, and it is the term used most loosely in this space. Two minutes here saves a lot of talking past each other later.</p>
+  </div>
+
+  <div class="defbox">
+    <p class="deflabel">Namespace</p>
+    <p class="defbody">An ordered sequence of identifier levels that scopes a table name.</p>
+    <p class="defeg"><code>finance › orders</code> in Glue &nbsp;·&nbsp; <code>prod › finance › orders</code> in Unity Catalog</p>
+  </div>
+
+  <div class="prose">
+    <p>That is all it is. What makes it consequential is that three separate things hang off it — and a catalog that is short of namespace levels is short on all three at once.</p>
+  </div>
+
+  <div class="jobs">
+    <div>
+      <p class="k">Job 1</p>
+      <p class="t">Collision domain</p>
+      <p class="d">Two teams both want a table called <code>orders</code>. The namespace is what decides whether they can have one each.</p>
+      <p class="eg">Run out of levels and people encode the missing one into the name — <code>finance_prod_orders</code> — which no tool can reason about and no grant can match on.</p>
+    </div>
+    <div>
+      <p class="k">Job 2</p>
+      <p class="t">Grant inheritance</p>
+      <p class="d">Permissions attach to a namespace and flow down to the tables inside it, including tables that do not exist yet.</p>
+      <p class="eg"><code>GRANT SELECT ON SCHEMA finance TO analysts</code> should cover tomorrow's tables. Where a namespace is only a name prefix, every grant is per-table, and the set drifts from day one.</p>
+    </div>
+    <div>
+      <p class="k">Job 3</p>
+      <p class="t">Mount point</p>
+      <p class="d">A free level at the top where an <em>entire foreign catalog</em> can be attached without renaming anything inside it.</p>
+      <p class="eg">Exactly the filesystem sense of the word: you attach a second disk at <code>/mnt/old</code> and its directory tree arrives intact. Worked through below — it is the least obvious of the three and the one that decides whether a migration can be incremental.</p>
+    </div>
+  </div>
+
+  <figure class="figbox">
+    <svg viewBox="0 0 900 250" role="img" aria-label="Namespace depth compared: Glue's single database level leaves no room to mount a federated catalog, while Unity Catalog and Snowflake's extra level exists for exactly that, and Iceberg REST allows arbitrary depth.">
+      <g font-family="IBM Plex Sans, sans-serif" fill="currentColor">
+        <text x="20" y="22" font-size="12.5" font-weight="600">DEPTH IS NOT COSMETIC — it is whether you have somewhere to mount things</text>
+
+        <text x="20" y="58" font-size="11.5" font-weight="600" fill="#A9501C">Glue / Hive</text>
+        <rect x="20" y="70" width="118" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+        <text x="79" y="91" font-size="10.5" font-family="IBM Plex Mono, monospace" text-anchor="middle">finance</text>
+        <text x="146" y="91" font-size="13" fill-opacity="0.45">›</text>
+        <rect x="158" y="70" width="118" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+        <text x="217" y="91" font-size="10.5" font-family="IBM Plex Mono, monospace" text-anchor="middle">orders</text>
+        <text x="20" y="124" font-size="10.5" font-family="IBM Plex Mono, monospace" fill-opacity="0.6">database › table</text>
+        <text x="20" y="150" font-size="11" fill="#A9501C">No level is free. Mounting another catalog</text>
+        <text x="20" y="166" font-size="11" fill="#A9501C">means renaming every database first.</text>
+
+        <line x1="330" y1="42" x2="330" y2="200" stroke="currentColor" stroke-opacity="0.15"/>
+
+        <text x="352" y="58" font-size="11.5" font-weight="600" fill="#146C8C">Unity Catalog / Snowflake</text>
+        <rect x="352" y="70" width="96" height="34" fill="none" stroke="#146C8C" stroke-width="1.6"/>
+        <text x="400" y="91" font-size="10.5" font-family="IBM Plex Mono, monospace" text-anchor="middle">prod</text>
+        <text x="456" y="91" font-size="13" fill-opacity="0.45">›</text>
+        <rect x="468" y="70" width="96" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+        <text x="516" y="91" font-size="10.5" font-family="IBM Plex Mono, monospace" text-anchor="middle">finance</text>
+        <text x="572" y="91" font-size="13" fill-opacity="0.45">›</text>
+        <rect x="584" y="70" width="96" height="34" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+        <text x="632" y="91" font-size="10.5" font-family="IBM Plex Mono, monospace" text-anchor="middle">orders</text>
+        <text x="352" y="124" font-size="10.5" font-family="IBM Plex Mono, monospace" fill-opacity="0.6">catalog › schema › table</text>
+        <text x="352" y="150" font-size="11" fill="#146C8C">The extra level is the mount point.</text>
+        <rect x="352" y="162" width="96" height="30" fill="none" stroke="#146C8C" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="400" y="181" font-size="10" font-family="IBM Plex Mono, monospace" text-anchor="middle" fill="#146C8C">legacy</text>
+        <text x="458" y="181" font-size="10.5" fill-opacity="0.7">← the same Glue tables, federated in, renaming nothing</text>
+
+        <line x1="20" y1="212" x2="880" y2="212" stroke="currentColor" stroke-opacity="0.15"/>
+        <text x="20" y="234" font-size="11" fill-opacity="0.75"><tspan font-weight="600">Iceberg REST</tspan> takes any depth the deployment wants — <tspan font-family="IBM Plex Mono, monospace" font-size="10.5">/v1/namespaces/finance%1Feu%1Fpii/tables</tspan>, levels joined by the 0x1F separator.</text>
+      </g>
+    </svg>
+    <figcaption>Depth costs nothing until you need it, and cannot be added afterwards without renaming everything below it — which is why it is worth checking before it is the thing blocking a migration.</figcaption>
+  </figure>
+
+  <div class="prose">
+    <h3>The mount point, worked through</h3>
+    <p>The filesystem analogy is not a metaphor — it is the same mechanism. Mounting a second disk at <code>/mnt/old</code> brings its whole directory tree in, intact, under a name you chose. If your filesystem had no nesting — just a flat list of top-level directories — attaching that disk would mean renaming every directory on it to avoid clashing with yours. Catalog namespaces work identically, and a catalog with no spare level is that flat filesystem.</p>
+    <p>Make it concrete. You have 400 tables across 12 Glue databases, and roughly 900 dbt models, Airflow DAGs and BI extracts that reference them by name. You want to move to an open catalog over two quarters, incrementally.</p>
+  </div>
+
+  <div class="codes two">
+    <div>
+      <p class="cap r">Target catalog has no spare level</p>
+<pre class="bad"><span class="c"># The foreign catalog's databases are peers of your own. Two options,
+# both bad.</span>
+
+<span class="c"># (a) same names — now two systems both claim to own this:</span>
+finance.orders
+
+<span class="c">#     which one answers depends on which catalog the ENGINE is
+#     configured against. So the cutover is per-engine and
+#     all-or-nothing: no table can be half-migrated, and two
+#     teams on different engines silently read different data.</span>
+
+<span class="c"># (b) prefix to disambiguate:</span>
+glue_finance.orders
+
+<span class="c">#     every one of the 900 references is now wrong. You fix them
+#     all — and when the migration completes and the prefix goes
+#     away, you fix them all again. Two renames per reference to
+#     move a table once.</span></pre>
+    </div>
+    <div>
+      <p class="cap g">Target catalog has a spare level</p>
+<pre class="good"><span class="c">-- attach the whole Glue catalog, renaming nothing inside it,
+-- copying no data</span>
+CREATE CONNECTION glue_prod TYPE glue OPTIONS (…);
+CREATE FOREIGN CATALOG <span class="g">legacy</span> USING CONNECTION glue_prod;
+
+<span class="c">-- both trees now resolve in one engine, one session, one query</span>
+SELECT o.id, c.segment
+FROM   <span class="g">legacy</span>.finance.orders  o     <span class="c">-- still in Glue</span>
+JOIN   <span class="g">prod</span>.crm.customers    c        <span class="c">-- already migrated</span>
+  ON   c.id = o.cust_id;
+
+<span class="c">-- migrating one table is one rename, and only its own
+-- references change. The other 399 keep working.</span>
+legacy.finance.orders  →  prod.finance.orders
+
+<span class="c">-- and teams that have not migrated can set their default
+-- catalog to `legacy`, so their unqualified `finance.orders`
+-- keeps resolving exactly as it did. Zero changes for them
+-- until their tables actually move.</span></pre>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>That is the whole of it: <strong>the spare level is what lets old and new coexist under one name resolution, so migration becomes a per-table decision instead of a per-engine cutover.</strong> Without it, "incremental migration" is not a strategy that is available to you, regardless of how much you would prefer it.</p>
+    <p>The same free level does two other jobs you will want later, for the same reason — it holds a whole tree that isn't yours:</p>
+    <ul class="tight">
+      <li><strong>Environments.</strong> <code>dev.finance.orders</code> and <code>prod.finance.orders</code>, rather than <code>finance_dev</code> and <code>finance_prod</code> — which forces every grant and every automation to string-match on suffixes.</li>
+      <li><strong>Other people's data.</strong> A partner's shared catalog, or another business unit's, attaches as a top-level name instead of being flattened into yours.</li>
+    </ul>
+    <p>Glue has retrofitted a catalog tier above databases, along with federated catalogs, so the level formally exists. The practical caveat is that a great deal of tooling around Glue still assumes <code>database.table</code> and will not carry the third part — so check that your engines, your dbt profiles and your BI connectors actually address it before planning around it.</p>
+  </div>
+
+  <div class="prose">
+    <h3>Three words people say when they mean something adjacent</h3>
+  </div>
+  <div class="scroller">
+    <table>
+      <thead><tr><th style="min-width:120px">Word</th><th style="min-width:330px">What it means</th><th style="min-width:260px">Where the confusion comes from</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="dim">Catalog</td>
+          <td>The <em>service</em> — the thing that resolves names, decides who may read, and (if it is doing its job) decides what version a table is at.</td>
+          <td>In three-level systems it is also the name of the top namespace level. "Catalog" can mean the product or one level inside it.</td>
+        </tr>
+        <tr>
+          <td class="dim">Schema</td>
+          <td>Either the column list and types of one table, or a namespace level as in <code>catalog.schema.table</code>. This note says "table schema" for the first and "namespace" for the second.</td>
+          <td>Databricks, Snowflake and ANSI SQL use the second sense; Hive and Glue call the same level a <em>database</em>.</td>
+        </tr>
+        <tr>
+          <td class="dim">Warehouse</td>
+          <td>The storage root a catalog writes new tables under — <code>s3://lake/warehouse</code>. A property of the catalog, not of any namespace.</td>
+          <td>Unrelated to "warehouse" meaning a query engine, which is the more common usage everywhere else.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2 style="margin:0">What a modern technical catalog owes you</h2></div>
+  <div class="prose">
+    <p>"Catalog" covers two jobs that used to be separate and are now expected in one product: the <em>transaction authority</em> (who decides what the current version of a table is) and the <em>governance plane</em> (who may see what, and what happened). Glue does the first well for Iceberg and the second only through Lake Formation. Thirteen dimensions, scored 0–3, are enough to make the comparison concrete.</p>
+  </div>
+
+  <div class="rubric">
+    <div><div class="k">D1</div><div class="t">Identity &amp; namespace</div><div class="d">Stable table UUIDs that survive rename; multi-level namespaces; a single logical name that engines resolve identically.</div></div>
+    <div><div class="k">D2</div><div class="t">Commit authority</div><div class="d">The catalog is the serialization point for writes — not a mirror updated after the fact. Per table format.</div></div>
+    <div><div class="k">D3</div><div class="t">Multi-table transactions</div><div class="d">Two tables committed atomically. Only possible when the catalog owns commit ordering for both.</div></div>
+    <div><div class="k">D4</div><div class="t">Open API surface</div><div class="d">Iceberg REST Catalog spec, Delta commit APIs. The measure of whether an engine you have not chosen yet can join.</div></div>
+    <div><div class="k">D5</div><div class="t">Credential vending</div><div class="d">Short-lived, path-scoped storage credentials issued per request, so engines never hold raw bucket policies.</div></div>
+    <div><div class="k">D6</div><div class="t">Fine-grained authorization</div><div class="d">Row filters, column masks, tag/attribute-based policy, inherited down the namespace — and unbypassable.</div></div>
+    <div><div class="k">D7</div><div class="t">Lineage &amp; audit</div><div class="d">Column-level lineage captured automatically; a queryable access log, not just cloud-provider API trails.</div></div>
+    <div><div class="k">D8</div><div class="t">Portable views &amp; functions</div><div class="d">A view defined once that Trino, Spark and Snowflake all resolve — the hardest interop problem after commits.</div></div>
+    <div><div class="k">D9</div><div class="t">Non-table assets</div><div class="d">Files/volumes, ML models, functions under the same grants. Determines whether the catalog governs the platform or one slice.</div></div>
+    <div><div class="k">D10</div><div class="t">Lifecycle services</div><div class="d">Compaction, clustering, snapshot expiry, orphan-file cleanup driven by the catalog rather than by your cron.</div></div>
+    <div><div class="k">D11</div><div class="t">Federation</div><div class="d">Mounting foreign catalogs — HMS, Glue, JDBC, another warehouse — under one namespace without copying data.</div></div>
+    <div><div class="k">D12</div><div class="t">Exit path</div><div class="d">Open spec, OSS implementation, and an export of the governance model. Directly proportional to your leverage.</div></div>
+    <div><div class="k">D13</div><div class="t">Compute reach</div><div class="d">Which engines can execute against the catalog, running where — and whether the catalog quietly requires a vendor-operated service on the query path.</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2 style="margin:0">The thirteen dimensions, concretely</h2></div>
+  <div class="prose">
+    <p>Each dimension below carries a <em>test</em> — a question you can put to a candidate catalog and get a yes or a no, rather than a marketing answer. The code is what the yes and the no actually look like.</p>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D1</span><h3>Identity &amp; namespace</h3></div>
+    <p>Two separable things: the <em>namespace</em> — the levels that scope a name, as defined in §01 — and the <em>identity</em> a name resolves to. Hive-derived catalogs collapse them, making the string pair <code>(database, table)</code> <em>be</em> the identity. Modern catalogs mint a UUID at create time and let the human-readable name move independently, so grants, lineage and downstream references follow a rename instead of breaking on it.</p>
+    <p class="test"><span>The test</span>Rename a table. Do its grants, lineage edges and audit history survive?</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">Iceberg REST — identity is a UUID</p>
+<pre class="good">GET /v1/namespaces/finance/tables/orders
+
+{
+  "metadata-location":
+      "s3://lake/finance/orders/metadata/
+       00042-a3f1b9.metadata.json",
+  "metadata": {
+    <span class="g">"table-uuid": "9f2b1c44-8e07-4a11-…"</span>,
+    "current-snapshot-id": 7264913882031,
+    "format-version": 2
+  }
+}
+<span class="c"># the name is a label; the uuid is the table</span></pre>
+      </div>
+      <div>
+        <p class="cap r">Glue — identity is the name</p>
+<pre class="bad">glue.get_table(DatabaseName="finance",
+               Name="orders")
+
+<span class="c"># there is no stable object id.
+# a "rename" is two unrelated calls:</span>
+glue.create_table(DatabaseName="finance",
+                  TableInput={"Name": "orders_v2", …})
+glue.delete_table(DatabaseName="finance",
+                  Name="orders")
+
+<span class="r"># → a new object. Lake Formation grants on
+# finance.orders do not follow. Neither does
+# anything that referenced it.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D2</span><h3>Commit authority</h3></div>
+    <p>Whether the catalog is the serialization point for writes, or a mirror updated afterwards. The single dimension that most cleanly separates "catalog" from "table list" — and the one where the answer differs completely between Iceberg and Delta.</p>
+    <p>A Delta table's current version is not recorded anywhere: a reader lists <code>_delta_log/</code> and takes the highest contiguous version number. Two writers that both read v11 both compute "my commit is 12," both render <code>…000012.json</code>, and both try to create it — so correctness needs <code>putIfAbsent</code>, which S3 lacked until conditional writes shipped in November 2024. Iceberg avoids this by construction: metadata files carry a fresh UUID in the name so nothing contends, the table's identity is a single pointer held <em>in the catalog</em>, and a commit is a conditional swap of that pointer. Delta 4.1's catalog-managed tables move Delta onto the same footing — staged UUID-named commits, ratified by the catalog.</p>
+    <p class="test"><span>The test</span>Take the catalog offline. Can a writer still advance the table to a new version? If yes, it is not the authority.</p>
+    <div class="codes">
+      <div>
+        <p class="cap g">Iceberg on Glue — the CAS, as the client actually performs it</p>
+<pre class="good"><span class="c"># 1. read current pointer + the version token</span>
+t   = glue.get_table(DatabaseName="finance", Name="orders")["Table"]
+cur = t["Parameters"]["metadata_location"]
+ver = t["VersionId"]
+
+<span class="c"># 2. write new metadata to a UUID-derived name — no contention possible</span>
+new_loc = f"{base}/metadata/00043-{uuid4()}.metadata.json"
+s3.put_object(Bucket=…, Key=…, Body=serialize(new_metadata))
+
+<span class="c"># 3. compare-and-swap. This single call IS Iceberg's concurrency control.</span>
+glue.update_table(
+    DatabaseName="finance",
+    TableInput={"Name": "orders", "Parameters": {
+        "metadata_location":          new_loc,
+        "previous_metadata_location": cur}},
+    <span class="g">VersionId=ver</span>)
+<span class="c"># a concurrent writer bumped VersionId →
+#   ConcurrentModificationException → refresh from v12, re-apply, retry</span></pre>
+      </div>
+      <div>
+        <p class="cap r">Delta, filesystem-managed — note that Glue appears nowhere in the configuration</p>
+<pre class="bad">spark.delta.logStore.s3a.impl                            io.delta.storage.S3DynamoDBLogStore
+spark.io.delta.storage.S3DynamoDBLogStore.ddb.tableName  delta_log_mutex
+spark.io.delta.storage.S3DynamoDBLogStore.ddb.region     us-east-1
+
+<span class="c"># The mutual exclusion is DynamoDB's conditional write, not Glue's.
+# Glue holds a location and a schema copy that nothing verifies.
+# Your custom coordinator substitutes for these three lines.</span></pre>
+      </div>
+      <div>
+        <p class="cap g">Delta, catalog-managed — the seat that did not previously exist</p>
+<pre class="good">ALTER TABLE finance.orders
+  SET TBLPROPERTIES (<span class="g">'delta.feature.catalogManaged' = 'supported'</span>);
+
+<span class="c">-- commit path becomes:
+--   ① PUT _delta_log/_staged_commits/&lt;uuid&gt;.json   (unconditional, safe)
+--   ② POST commit v12 to the catalog                (catalog decides ordering)
+--   ③ backfill …000012.json asynchronously          (for legacy readers)</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D3</span><h3>Multi-table transactions</h3></div>
+    <p>Only reachable once the catalog owns commit ordering for every table involved — which is why it is the clearest downstream payoff of D2, and why no filesystem-coordinated format can offer it.</p>
+    <p class="test"><span>The test</span>Can a reader observe table A updated and table B not, in the middle of a pipeline step?</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">With a commit-owning catalog</p>
+<pre class="good">BEGIN;
+  INSERT INTO silver.orders
+    SELECT * FROM bronze.orders_raw
+    WHERE dt = '2026-09-08';
+
+  MERGE INTO gold.order_summary t
+    USING silver.orders s ON t.k = s.k
+    WHEN MATCHED THEN UPDATE SET …;
+COMMIT;
+<span class="c">-- both version bumps ratified together,
+-- or neither. No window.</span>
+
+<span class="c"># Iceberg REST spec endpoint:</span>
+POST /v1/{prefix}/transactions/commit</pre>
+      </div>
+      <div>
+        <p class="cap r">Without one — the observable anomaly</p>
+<pre class="bad">09:14:02  silver.orders       → v88  <span class="g">✓</span>
+09:14:39  gold.order_summary  → v41  <span class="r">✗ job OOMs</span>
+
+<span class="c"># For 37 seconds any reader sees new orders
+# with stale summaries. After the crash, that
+# state is permanent until someone notices.</span>
+
+<span class="c"># Detection and repair are your code:</span>
+SELECT (SELECT sum(amt) FROM silver.orders)
+     - (SELECT sum(amt) FROM gold.order_summary);</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D4</span><h3>Open API surface</h3></div>
+    <p>Not "does it have an API" but "is the API a specification someone else has also implemented." That is the difference between a catalog you can leave and a catalog you can only migrate off.</p>
+    <p class="test"><span>The test</span>Change one configuration line to point the same job at a different vendor's catalog. Does it run unmodified?</p>
+    <div class="codes">
+      <div>
+        <p class="cap g">The portability test, in one property</p>
+<pre class="good">spark.sql.catalog.lake            org.apache.iceberg.spark.SparkCatalog
+spark.sql.catalog.lake.type       rest
+spark.sql.catalog.lake.warehouse  s3://lake/warehouse
+
+<span class="h">spark.sql.catalog.lake.uri        https://glue.us-east-1.amazonaws.com/iceberg</span>
+<span class="c">#                                 https://polaris.internal/api/catalog
+#                                 https://lakekeeper.internal/catalog
+# only this line and the auth scheme change. Every query above it is untouched.</span></pre>
+      </div>
+      <div>
+        <p class="cap">And the two commands that verify a candidate really speaks the spec</p>
+<pre>curl -H "Authorization: Bearer $TOKEN" https://$CATALOG/v1/config
+curl -H "Authorization: Bearer $TOKEN" https://$CATALOG/v1/namespaces/finance/tables
+
+<span class="c"># Watch for the re-coupling: Glue's Iceberg REST *extension* endpoint adds
+# server-side scan planning that is not in the spec. Useful, and using it
+# puts you back on an AWS-only path.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D5</span><h3>Credential vending</h3></div>
+    <p>The catalog issues short-lived, path-scoped storage credentials per request. Without it, every engine node needs standing IAM permission on the warehouse prefix — which quietly demotes every table-level grant to advisory.</p>
+    <p class="test"><span>The test</span>Does a Trino worker need an instance role with <code>s3:GetObject</code> on the warehouse prefix? If yes, there is no vending.</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">Vended — the client asks, the catalog scopes</p>
+<pre class="good">GET /v1/namespaces/finance/tables/orders
+<span class="g">X-Iceberg-Access-Delegation: vended-credentials</span>
+
+{ "metadata-location": "…",
+  "config": {
+    "s3.access-key-id":     "ASIA…",
+    "s3.secret-access-key": "…",
+    "s3.session-token":     "…",
+    "s3.region":            "us-east-1",
+    <span class="c">// ~1h, scoped to this table's prefix</span>
+    "expires-at-ms": "1757352000000"
+  } }</pre>
+      </div>
+      <div>
+        <p class="cap r">Not vended — the blast radius</p>
+<pre class="bad"><span class="c"># engine instance role</span>
+{ "Effect": "Allow",
+  "Action": "s3:GetObject",
+  "Resource": <span class="r">"arn:aws:s3:::lake/warehouse/*"</span> }
+
+<span class="c"># Anyone who can submit a job to this cluster
+# can read every table in the warehouse,
+# whatever the catalog's grants say.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D6</span><h3>Fine-grained authorization</h3></div>
+    <p>Row filters, column masks and attribute-based policy, inherited down the namespace. The dimension that matters is not whether the features exist but whether they can be bypassed — which makes D6 largely a function of D5.</p>
+    <p class="test"><span>The test</span>Can a user get the unfiltered table by reading the files directly?</p>
+    <div class="codes">
+      <div>
+        <p class="cap g">Policy as catalog objects</p>
+<pre class="good">CREATE FUNCTION finance.region_guard(region STRING)
+  RETURN is_account_group_member('finance-admin')
+      OR region = session_user_region();
+
+ALTER TABLE  finance.orders    SET ROW FILTER finance.region_guard ON (region);
+ALTER TABLE  finance.customers ALTER COLUMN ssn SET MASK finance.mask_last4;
+GRANT SELECT ON TABLE finance.orders TO `analysts`;</pre>
+      </div>
+      <div>
+        <p class="cap r">The bypass probe — run this as an analyst</p>
+<pre class="bad">spark.read.format("delta").load("s3://lake/finance/orders").show()
+
+<span class="g"># credential-vending catalog  → 403; no credentials are issued for a
+#                                direct path read, so the filter holds</span>
+<span class="r"># IAM-granted bucket access    → the full, unfiltered table, ssn in clear</span>
+
+<span class="c"># Lake Formation does implement row filters and column grants — but
+# enforcement lives in LF-integrated engines. A plain EMR job with S3
+# permissions reads around them. The features are real; the boundary is not.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D7</span><h3>Lineage &amp; audit</h3></div>
+    <p>Automatically captured column-level derivation, plus a queryable access log. Cloud API trails are not a substitute: they record who called <code>GetTable</code>, not who read which column or where a value came from.</p>
+    <p class="test"><span>The test</span>A number in a dashboard is wrong. Can you name every upstream column that fed it, without asking a human?</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">Lineage as a queryable table</p>
+<pre class="good">SELECT source_table_full_name,
+       source_column_name,
+       target_column_name,
+       event_time
+FROM   system.access.column_lineage
+WHERE  target_table_full_name = 'gold.revenue'
+  AND  target_column_name     = 'net_arr';
+
+SELECT user_identity.email, action_name,
+       request_params.full_name_arg
+FROM   system.access.audit
+WHERE  service_name = 'unityCatalog'
+  AND  event_date  >= current_date() - 7;</pre>
+      </div>
+      <div>
+        <p class="cap r">What CloudTrail gives you instead</p>
+<pre class="bad">{ "eventSource": "glue.amazonaws.com",
+  "eventName":   "GetTable",
+  "userIdentity": { "arn": "…/emr-instance-role" },
+  "requestParameters": {
+      "databaseName": "finance",
+      "name": "orders" } }
+
+<span class="c"># The principal is a shared role, not a person.
+# The object is a table, not a column.
+# There is no derivation graph at all — you
+# reconstruct it from job source, by hand.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D8</span><h3>Portable views &amp; functions</h3></div>
+    <p>A view defined once that several engines resolve identically. After commit coordination this is the hardest interoperability problem, because a view is SQL text and SQL dialects disagree — sometimes loudly, and sometimes by silently returning different numbers. §04 works this through in detail; the summary is below.</p>
+    <p class="test"><span>The test</span>Define a view in Spark. Does Trino return the same rows — or any rows?</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">Iceberg view spec — dialects are explicit</p>
+<pre class="good">"representations": [
+  { "type": "sql", <span class="g">"dialect": "spark"</span>,
+    "sql": "SELECT id, date_trunc('MONTH', ts)
+            AS m FROM finance.orders" },
+  { "type": "sql", <span class="g">"dialect": "trino"</span>,
+    "sql": "SELECT id, date_trunc('month', ts)
+            AS m FROM finance.orders" }
+],
+"schema": { … }
+
+<span class="c">// an engine picks its dialect, or refuses
+// loudly. It never guesses.</span></pre>
+      </div>
+      <div>
+        <p class="cap r">Hive/Glue view — one blob, no dialect</p>
+<pre class="bad">{ "TableType": "VIRTUAL_VIEW",
+  "ViewOriginalText": "SELECT id,
+     date_trunc('MONTH', ts) AS m FROM …",
+  "ViewExpandedText": "…" }
+
+<span class="c"># Spark:  date_trunc('MONTH', ts)  ✓
+# Trino:  date_trunc('MONTH', ts)  → error,
+#         or in the bad case a different
+#         truncation unit and silently
+#         different rows.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D9</span><h3>Non-table assets</h3></div>
+    <p>Files, ML models and functions under the same grant model as tables. This determines whether the catalog governs your platform or one slice of it — and unmanaged slices are where governance drifts.</p>
+    <p class="test"><span>The test</span>Where does "give the ML team access to the raw contract PDFs" get expressed?</p>
+    <div class="codes two">
+      <div>
+        <p class="cap g">One grant model</p>
+<pre class="good">CREATE VOLUME main.raw.contracts;
+GRANT READ VOLUME ON VOLUME main.raw.contracts
+  TO `ml-eng`;
+
+COPY INTO main.silver.parsed
+  FROM '/Volumes/main/raw/contracts/2026/09/';
+
+GRANT EXECUTE ON FUNCTION main.finance.fx_rate
+  TO `analysts`;
+GRANT EXECUTE ON MODEL main.ml.churn_v3
+  TO `serving`;</pre>
+      </div>
+      <div>
+        <p class="cap r">Two systems, two identity models</p>
+<pre class="bad"><span class="c"># tables: Lake Formation grants</span>
+lf.grant_permissions(Principal={…},
+    Resource={"Table": {…}},
+    Permissions=["SELECT"])
+
+<span class="c"># the PDFs: an S3 bucket policy, in a
+# different console, keyed on IAM
+# principals rather than catalog groups</span>
+{ "Effect": "Allow", "Principal": {"AWS": …},
+  "Action": "s3:GetObject",
+  "Resource": "arn:aws:s3:::raw/contracts/*" }
+
+<span class="r"># nothing keeps these two in agreement</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D10</span><h3>Lifecycle services</h3></div>
+    <p>Compaction, clustering, snapshot expiry and orphan-file cleanup driven by the catalog. Every one of these is work that must happen; the only question is whether you operate it.</p>
+    <p class="test"><span>The test</span>Who compacts? If the answer is a cron job your team maintains, the catalog is not doing this job.</p>
+    <div class="codes two">
+      <div>
+        <p class="cap r">What you own without it</p>
+<pre class="bad">CALL lake.system.rewrite_data_files(
+  table   => 'finance.orders',
+  options => map('target-file-size-bytes',
+                 '536870912'));
+
+CALL lake.system.expire_snapshots(
+  table      => 'finance.orders',
+  older_than => TIMESTAMP '2026-08-08 00:00:00');
+
+CALL lake.system.remove_orphan_files(
+  table => 'finance.orders');
+
+<span class="c">-- × every table, on a schedule, with
+-- cluster sizing and failure handling</span></pre>
+      </div>
+      <div>
+        <p class="cap g">Catalog-driven — Glue, Iceberg only</p>
+<pre class="good">glue.create_table_optimizer(
+  CatalogId=acct,
+  DatabaseName="finance", TableName="orders",
+  <span class="g">Type="compaction"</span>,
+  TableOptimizerConfiguration={
+      "roleArn": role, "enabled": True})
+
+<span class="c"># also Type="retention"
+#      Type="orphan_file_deletion"</span>
+
+<span class="r"># No equivalent for Delta tables. OPTIMIZE
+# and VACUUM stay your cron's problem — the
+# same asymmetry as D2, one layer up.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D11</span><h3>Federation</h3></div>
+    <p>Mounting a foreign catalog under one namespace without copying data. Worth more than it first appears: federation is the mechanism that lets you move commit authority incrementally rather than in a cutover.</p>
+    <p class="test"><span>The test</span>Can you join the legacy HMS table to the new managed table in one statement, with no copy step?</p>
+    <div class="codes">
+      <div>
+        <p class="cap g">Mount, then migrate table by table</p>
+<pre class="good">CREATE CONNECTION legacy_glue TYPE glue
+  OPTIONS (aws_region 'us-east-1',
+           role_arn  'arn:aws:iam::…:role/uc-federation');
+
+CREATE FOREIGN CATALOG legacy USING CONNECTION legacy_glue;
+
+SELECT o.id, o.amt, c.segment
+FROM   <span class="h">legacy.finance.orders</span> o        <span class="c">-- still in Glue, not copied</span>
+JOIN   <span class="h">main.crm.customers</span>    c ON c.id = o.cust_id;   <span class="c">-- native managed</span>
+
+<span class="c">-- the migration is then per-table and reversible, instead of a weekend</span></pre>
+      </div>
+    </div>
+
+    <h3 style="margin-top:26px">When you actually need this</h3>
+    <p style="max-width:68ch; font-size:0.945rem">Migration is the <em>transitional</em> case — you federate for two quarters and then stop. The steady-state cases are what decide whether this is a feature you use once or a permanent part of the architecture. The unifying rule: <strong>you need federation whenever authority over a dataset legitimately belongs to somebody else.</strong> Three reasons it does.</p>
+
+    <p class="cap" style="margin-top:18px">① Legal — the case where copying is not merely expensive but prohibited</p>
+    <p style="max-width:68ch; font-size:0.93rem">EU customer records must stay in an EU-resident account, under a catalog EU staff administer, and must not be replicated to a US account. A revenue analyst in the US needs those records joined to global product reference data. This is the scenario where federation is load-bearing: there is no copy-based design that is also lawful.</p>
+    <div class="codes">
+      <div>
+<pre class="good">CREATE CONNECTION eu_lake TYPE iceberg_rest
+  OPTIONS (uri 'https://catalog.eu-central-1.internal/api/catalog', …);
+CREATE FOREIGN CATALOG eu USING CONNECTION eu_lake;
+
+SELECT p.category, sum(o.amount)
+FROM   <span class="g">eu</span>.customers.orders  o        <span class="c">-- bytes never leave the EU account</span>
+JOIN   global.ref.products  p ON p.sku = o.sku
+GROUP  BY p.category;
+
+<span class="c"># What makes this work rather than merely look like it works:
+#   · the EU catalog vends the credentials, so the EU side decides what the
+#     US engine may read, per request, and can revoke it
+#   · the read is logged in the EU account's audit trail, by the EU team
+#   · residency is a property of the deployment, not of a policy document —
+#     there is no copy that could drift out of compliance</span></pre>
+      </div>
+    </div>
+
+    <p class="cap" style="margin-top:18px">② Organizational — domain teams that genuinely own their own lifecycle</p>
+    <p style="max-width:68ch; font-size:0.93rem">Each domain runs its own catalog, its own compaction schedule and its own on-call, and a central catalog federates them for discovery and cross-domain joins. The alternative is one of two failure modes everybody has seen: a central platform team nominally owning four hundred tables whose semantics they do not know, or nightly copies into a central warehouse that are permanently a day stale and double the storage bill. Federation lets ownership sit where the knowledge is while queries still span everything.</p>
+
+    <p class="cap" style="margin-top:18px">③ Corporate — an acquisition, which is ② arriving overnight and without consent</p>
+    <p style="max-width:68ch; font-size:0.93rem">You buy a company running Snowflake; you run Databricks. Both estates are live for eighteen months, realistically longer. Federation produces combined reporting in week four instead of quarter three, and it means the integration programme can be paced by business value rather than by a migration deadline that will slip anyway.</p>
+
+    <div class="callout delta">
+      <p><strong>And the honest cost, because federation is over-prescribed.</strong> Cross-catalog queries perform worse — statistics do not unify, predicate and aggregate pushdown are partial, and a join across the boundary can be dramatically slower than the same join within one catalog. The foreign catalog's availability becomes your availability. Governance is only as strong as the weaker of the two sides. And a federated table is not maintained by your catalog, so D10 stays with whoever owns it.</p>
+      <p>So the test is the rule above, applied strictly: <strong>federate when the authority genuinely belongs elsewhere — legally, organizationally, or temporarily.</strong> If you could own the dataset and simply have not got round to it, migrating it is almost always the better answer than federating it permanently.</p>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D12</span><h3>Exit path</h3></div>
+    <p>Open spec, open implementation, and an export of the governance model. The first two are common; the third essentially does not exist anywhere, which is the single most important fact on this page for a lock-in conversation.</p>
+    <p class="test"><span>The test</span>Write the migration script. How long is it — and what can't go in it?</p>
+    <div class="codes">
+      <div>
+        <p class="cap g">The table plane: genuinely this short, because you are moving a pointer</p>
+<pre class="good">from pyiceberg.catalog import load_catalog
+
+src = load_catalog("glue",    type="glue")
+dst = load_catalog("polaris", type="rest",
+                   uri="https://polaris.internal/api/catalog")
+
+for ns in src.list_namespaces():
+    dst.create_namespace_if_not_exists(ns)
+    for ident in src.list_tables(ns):
+        meta_loc = src.load_table(ident).metadata_location
+        <span class="g">dst.register_table(ident, meta_loc)</span>   <span class="c"># zero bytes of data move</span></pre>
+      </div>
+      <div>
+        <p class="cap r">The governance plane: no script exists</p>
+<pre class="bad">row filters / column masks   <span class="r">→</span> no interchange format. Re-author by hand.
+tag-based policy (LF-Tags)   <span class="r">→</span> AWS-specific model, no equivalent elsewhere.
+column-level lineage         <span class="r">→</span> not exportable; history restarts at zero.
+audit history                <span class="r">→</span> not exportable.
+view definitions             <span class="r">→</span> portable only if stored as Iceberg views.
+
+<span class="c"># Which is the real answer to "how locked in are we": not very, on tables;
+# substantially, on everything that took two years of policy work.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">D13</span><h3>Compute reach</h3></div>
+    <p>Where your engines are allowed to run. D12 asks what it costs to leave the catalog; this one asks what the catalog costs you while you are still on it — because a catalog that only serves the vendor's own compute has priced your engine choice, your cluster placement and your egress before you noticed.</p>
+    <p class="test"><span>The test</span>Can a Spark job on <em>your</em> EKS cluster read <em>and write</em> a governed table, with the row filters and column masks still applied?</p>
+    <p style="max-width:68ch; font-size:0.945rem">Five sub-questions separate the answers, and the last two are the ones that get skipped:</p>
+    <ul class="tight" style="max-width:68ch; font-size:0.93rem">
+      <li><strong>Authentication.</strong> Standard OAuth2 / OIDC client credentials, or a vendor-proprietary token that only their runtime can mint?</li>
+      <li><strong>Locus.</strong> Can compute run outside the vendor's platform at all — your own EMR, EKS, on-prem, a laptop?</li>
+      <li><strong>Read/write symmetry.</strong> Reading is the easy half. Vendors open reads long before they open writes, and a read-only external path means every pipeline still runs on their compute.</li>
+      <li><strong>Hot-path services.</strong> Does the catalog put a vendor-operated service on <em>every query</em> — server-side scan planning, a sharing proxy? Convenient, and simultaneously a throughput ceiling, a bill that scales with query volume, and a dependency that does not appear in any architecture diagram.</li>
+      <li><strong>Policy at the boundary.</strong> When an external engine reads, do the masks and row filters still apply — or does the policy evaporate, leaving table-level grants only?</li>
+    </ul>
+    <div class="codes">
+      <div>
+        <p class="cap g">The test, run for real</p>
+<pre class="good"><span class="c"># your cluster, your Spark, no vendor runtime anywhere in the picture</span>
+spark.sql.catalog.lake.type        rest
+spark.sql.catalog.lake.uri         https://&lt;catalog&gt;/api/catalog
+spark.sql.catalog.lake.credential  &lt;oauth2 client-id:secret&gt;
+
+<span class="c">-- half one: everybody passes this</span>
+SELECT count(*) FROM lake.finance.orders;
+
+<span class="c">-- half two: this is where catalogs separate</span>
+INSERT INTO lake.finance.orders SELECT * FROM staging;
+
+<span class="c">-- half three: the question nobody asks until an audit</span>
+SELECT ssn FROM lake.finance.customers;
+<span class="g">--   masked      → the policy travels with the table</span>
+<span class="r">--   in the clear → the policy lived in the vendor's engine, not the catalog</span></pre>
+      </div>
+    </div>
+    <div class="scroller" style="margin-top:16px">
+      <table>
+        <thead><tr><th style="min-width:210px">Catalog</th><th style="min-width:90px">D13</th><th style="min-width:400px">Where compute may run</th></tr></thead>
+        <tbody>
+          <tr><td class="dim">Polaris · Lakekeeper · Nessie · UC OSS</td><td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td><td>Anywhere, over OAuth2, read and write. This is the entire proposition of a standalone REST catalog.</td></tr>
+          <tr><td class="dim">AWS Glue <span class="m" style="color:var(--muted)">native</span></td><td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td><td>SigV4 from anywhere with AWS credentials — EMR, EKS, on-prem, a laptop — read and write, no AWS-run compute required. Glue's genuine strength, and the one usually left out of the argument against it.</td></tr>
+          <tr><td class="dim">AWS Glue <span class="m" style="color:var(--muted)">+ Lake Formation</span></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td>Compute still runs anywhere, but <em>enforced</em> access needs an LF-integrated engine. Arbitrary Spark either bypasses the policy or cannot get credentials — so for governed tables the reach narrows to the engines AWS has integrated.</td></tr>
+          <tr><td class="dim">Unity Catalog <span class="m" style="color:var(--muted)">Databricks</span></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td>Reads are genuinely open through the Iceberg REST and open Delta APIs. Writes and the fine-grained policy layer lean toward Databricks compute: an external engine gets table-level grants and vended credentials, not row filters and column masks.</td></tr>
+          <tr><td class="dim">Snowflake Horizon</td><td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div></td><td>Horizon's policies are enforced by Snowflake's engine. External compute reaching the same Iceberg tables through the catalog layer beneath gets that layer's RBAC — not Horizon's masking, row policies or classification. For anything Horizon actually governs, the compute is Snowflake's.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 style="margin-top:30px">How external compute actually gets in</h3>
+    <p style="max-width:68ch; font-size:0.945rem">A score of 1 or 2 is not a locked door — it means the door is in a different place than you expect. Both Unity Catalog and Horizon have real paths for outside engines, and both split cleanly into <em>what travels across the boundary by itself</em> and <em>what you have to arrange</em>. Working through each is what turns D13 from a complaint into a design constraint.</p>
+
+    <figure class="figbox">
+      <svg viewBox="0 0 900 210" role="img" aria-label="Three ways external compute reaches governed data: connecting straight to the catalog bypasses the policy engine, routing through a sharing server applies the policy in flight, and materializing a filtered table bakes the policy into the bytes.">
+        <defs>
+          <marker id="a13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Sans, sans-serif" fill="currentColor">
+          <text x="20" y="20" font-size="12.5" font-weight="600">WHERE THE POLICY GETS APPLIED — the only three options</text>
+
+          <!-- A -->
+          <text x="20" y="52" font-size="11" font-weight="600" fill="#A9501C">A · straight to the catalog</text>
+          <rect x="20" y="64" width="82" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="61" y="83" font-size="10" text-anchor="middle">your Spark</text>
+          <line x1="102" y1="79" x2="140" y2="79" stroke="currentColor" stroke-width="1.3" marker-end="url(#a13)"/>
+          <rect x="144" y="64" width="76" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="182" y="83" font-size="10" text-anchor="middle">object store</text>
+          <rect x="144" y="112" width="76" height="28" fill="none" stroke="#A9501C" stroke-opacity="0.5" stroke-dasharray="4 3"/>
+          <text x="182" y="130" font-size="9.5" text-anchor="middle" fill="#A9501C">policy engine</text>
+          <text x="182" y="158" font-size="9.5" text-anchor="middle" fill="#A9501C">never consulted</text>
+          <text x="20" y="184" font-size="10.5" fill-opacity="0.7">grants travel · masks do not</text>
+
+          <line x1="286" y1="40" x2="286" y2="196" stroke="currentColor" stroke-opacity="0.15"/>
+
+          <!-- B -->
+          <text x="308" y="52" font-size="11" font-weight="600" fill="#146C8C">B · through a serving endpoint</text>
+          <rect x="308" y="64" width="82" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="349" y="83" font-size="10" text-anchor="middle">your Spark</text>
+          <line x1="390" y1="79" x2="424" y2="79" stroke="#146C8C" stroke-width="1.5" marker-end="url(#a13)" color="#146C8C"/>
+          <rect x="428" y="64" width="86" height="30" fill="none" stroke="#146C8C" stroke-width="1.7"/>
+          <text x="471" y="83" font-size="10" text-anchor="middle">policy engine</text>
+          <line x1="514" y1="79" x2="548" y2="79" stroke="currentColor" stroke-width="1.3" marker-end="url(#a13)"/>
+          <rect x="552" y="64" width="76" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="590" y="83" font-size="10" text-anchor="middle">object store</text>
+          <text x="308" y="130" font-size="10.5" fill="#146C8C">applied in flight, per recipient</text>
+          <text x="308" y="150" font-size="10.5" fill-opacity="0.7">cost: a vendor service on every read</text>
+          <text x="308" y="184" font-size="10.5" fill-opacity="0.7">masks travel · freshness kept</text>
+
+          <line x1="654" y1="40" x2="654" y2="196" stroke="currentColor" stroke-opacity="0.15"/>
+
+          <!-- C -->
+          <text x="676" y="52" font-size="11" font-weight="600" fill="#146C8C">C · materialized</text>
+          <rect x="676" y="64" width="82" height="30" fill="none" stroke="#146C8C" stroke-width="1.7"/>
+          <text x="717" y="83" font-size="10" text-anchor="middle">policy engine</text>
+          <line x1="717" y1="94" x2="717" y2="120" stroke="#146C8C" stroke-width="1.5" marker-end="url(#a13)" color="#146C8C"/>
+          <rect x="676" y="124" width="82" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="717" y="143" font-size="9.5" text-anchor="middle">filtered table</text>
+          <line x1="806" y1="139" x2="768" y2="139" stroke="currentColor" stroke-width="1.3" marker-end="url(#a13)"/>
+          <rect x="810" y="124" width="72" height="30" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+          <text x="846" y="143" font-size="9.5" text-anchor="middle">your Spark</text>
+          <text x="676" y="184" font-size="10.5" fill-opacity="0.7">masks travel · costs a copy</text>
+        </g>
+      </svg>
+      <figcaption>The policy has to be applied somewhere. A catalog protocol that has no concept of masking — and none of them do — leaves you choosing between a server on the read path and a pre-filtered copy.</figcaption>
+    </figure>
+
+    <p class="cap" style="margin-top:22px">Unity Catalog · what travels on its own</p>
+    <div class="codes">
+      <div>
+<pre class="good"><span class="c"># ① authenticate as a service principal — no Databricks runtime anywhere</span>
+curl -sX POST https://$WS/oidc/v1/token \
+     -u "$CLIENT_ID:$CLIENT_SECRET" \
+     -d grant_type=client_credentials -d scope=all-apis
+
+<span class="c"># ② connect any Iceberg REST client, and ask for vended credentials</span>
+spark.sql.catalog.uc                                    org.apache.iceberg.spark.SparkCatalog
+spark.sql.catalog.uc.type                               rest
+spark.sql.catalog.uc.uri                                https://$WS/api/2.1/unity-catalog/iceberg
+spark.sql.catalog.uc.token                              $OAUTH_TOKEN
+spark.sql.catalog.uc.header.X-Iceberg-Access-Delegation vended-credentials</pre>
+      </div>
+      <div>
+<pre><span class="g">SELECT * FROM uc.finance.orders;</span>
+<span class="c">-- works. UC's grants on that service principal are enforced, and the
+-- credentials are scoped to this table's prefix — so table-level
+-- authorization and D5 credential vending DO cross the boundary.</span>
+
+<span class="r">SELECT ssn FROM uc.finance.customers;</span>
+<span class="c">-- also works — and returns the raw column. The column mask is applied by
+-- the Databricks engine, and you are not using it.</span>
+
+<span class="c"># The rule: GRANTS travel. ROW FILTERS and MASKS do not.</span></pre>
+      </div>
+    </div>
+
+    <p class="cap g" style="margin-top:18px">Unity Catalog · making the policy travel — Delta Sharing with a recipient-aware view</p>
+    <div class="codes">
+      <div>
+<pre class="good"><span class="c">-- inside Databricks: bake the policy into the shared object itself</span>
+CREATE VIEW finance.eu_orders AS
+  SELECT id, amount, region,
+         '***-**-' || right(ssn, 4) AS ssn_masked
+  FROM   finance.orders
+  WHERE  region = <span class="g">current_recipient('region')</span>;   <span class="c">-- filters per recipient</span>
+
+CREATE SHARE partner_eu;
+ALTER SHARE partner_eu ADD VIEW finance.eu_orders;
+
+CREATE RECIPIENT acme;
+ALTER RECIPIENT acme SET PROPERTIES ('region' = 'EU');
+GRANT SELECT ON SHARE partner_eu TO RECIPIENT acme;</pre>
+      </div>
+      <div>
+<pre class="good"><span class="c"># external — plain Python, no Spark, no Databricks runtime, no cloud credentials</span>
+import delta_sharing
+df = delta_sharing.load_as_pandas(
+        "config.share#partner_eu.finance.eu_orders")
+
+<span class="c"># The row filter and the mask were applied by the sharing server before a
+# single byte moved. This is option B on the diagram — the policy travels,
+# and you have accepted a vendor service on the read path to get it.</span></pre>
+      </div>
+    </div>
+
+    <p class="cap" style="margin-top:22px">Snowflake Horizon · what travels on its own</p>
+    <div class="codes">
+      <div>
+<pre class="good"><span class="c"># Snowflake-managed Iceberg tables are reachable from any Iceberg client</span>
+spark.sql.catalog.sf             org.apache.iceberg.spark.SparkCatalog
+spark.sql.catalog.sf.type        rest
+spark.sql.catalog.sf.uri         https://&lt;account&gt;.snowflakecomputing.com/polaris/api/catalog
+spark.sql.catalog.sf.credential  &lt;client-id&gt;:&lt;secret&gt;
+spark.sql.catalog.sf.warehouse   &lt;catalog-name&gt;
+
+<span class="c"># RBAC and credential vending from the catalog layer apply. That is the
+# boundary you actually get: which tables this principal can obtain
+# credentials for. Real, enforceable — and table-level.</span></pre>
+      </div>
+      <div>
+<pre class="bad"><span class="c">-- these are defined in Snowflake and executed by Snowflake's engine</span>
+CREATE MASKING POLICY mask_ssn AS (v STRING) RETURNS STRING ->
+  CASE WHEN is_role_in_session('PII_READER') THEN v
+       ELSE '***-**-' || right(v, 4) END;
+ALTER TABLE finance.customers MODIFY COLUMN ssn SET MASKING POLICY mask_ssn;
+
+CREATE ROW ACCESS POLICY eu_only AS (region STRING) RETURNS BOOLEAN ->
+  region = 'EU' OR is_role_in_session('GLOBAL');
+ALTER TABLE finance.orders ADD ROW ACCESS POLICY eu_only ON (region);
+
+<span class="g">-- queried from Snowflake        → masked and filtered</span>
+<span class="r">-- queried from external Spark   → neither. The policy is in the engine
+--                                  you just declined to use.</span></pre>
+      </div>
+    </div>
+
+    <p class="cap g" style="margin-top:18px">Snowflake Horizon · making the policy travel — materialize it into its own Iceberg table</p>
+    <div class="codes">
+      <div>
+<pre class="good"><span class="c">-- run the policy once, in Snowflake, and let its RESULT be the shared object.
+-- A dynamic table keeps it fresh, so this is not a nightly-copy answer.</span>
+CREATE DYNAMIC ICEBERG TABLE finance.orders_eu_safe
+  TARGET_LAG      = '5 minutes'
+  WAREHOUSE       = etl_wh
+  CATALOG         = 'SNOWFLAKE'
+  EXTERNAL_VOLUME = 'lake_vol'
+  BASE_LOCATION   = 'finance/orders_eu_safe'
+AS
+  SELECT id, amount, region,
+         '***-**-' || right(ssn, 4) AS ssn_masked
+  FROM   finance.orders
+  WHERE  region = 'EU';
+
+<span class="c">-- grant externally on this, and never on the base table</span>
+GRANT SELECT ON TABLE finance.orders_eu_safe TO ROLE external_reader;
+
+<span class="c"># External Spark now reads a table whose every row and column it is
+# entitled to see. Option C on the diagram: the policy is in the bytes,
+# so it cannot be bypassed by choosing a different engine.</span></pre>
+      </div>
+    </div>
+
+    <div class="callout ice">
+      <p><strong>The general shape.</strong> There are exactly three places a fine-grained policy can be applied, and no catalog protocol offers a fourth — the Iceberg REST spec has no concept of a column mask or a row filter, which is the root cause of everything above. So: <strong>(A)</strong> connect straight to the catalog and accept table-level authorization; <strong>(B)</strong> put a policy-enforcing endpoint on the read path — Delta Sharing, or a Snowflake-served query — and pay the hot-path dependency; or <strong>(C)</strong> materialize the policy's result as its own table and grant on that, paying a copy and some latency.</p>
+      <p>Most teams end up on (C) for external analytics and (A) for internal engineering, and that is a perfectly defensible architecture — the failure mode is arriving there by accident, having assumed masks travelled, and finding out during an audit. The one question to settle early: <em>for each governed table, which of A, B or C is it on, and who checked?</em></p>
+    </div>
+
+    <p class="note">The pattern worth naming: <strong>reach and governance trade against each other in every managed catalog on this list.</strong> The richer the policy model, the more of it is implemented in the vendor's engine rather than in the catalog — which is why "open read APIs" is a weaker claim than it sounds, and why the sharpest question to ask a vendor is not "can other engines connect" but "what do other engines lose when they do."</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2 style="margin:0">The dialect problem, in detail</h2></div>
+  <div class="prose">
+    <p>D8 deserves more than a row, because it is the dimension most often waved through. A <em>table</em> is data plus a schema — self-describing, and every engine reads it the same way. A <em>view</em> is a program, and the language it is written in is standardised only in the places that do not matter. Two engines pointed at the same view definition can disagree in three escalating ways: one refuses to run it, one runs it and errors, or — the case that should worry you — both run it and return different numbers.</p>
+    <p>These are not exotic edge cases. Every row below is reachable from ordinary analytics SQL.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th style="min-width:150px">Divergence</th>
+        <th style="min-width:200px">Expression</th>
+        <th style="min-width:175px">Spark</th>
+        <th style="min-width:175px">Trino</th>
+        <th style="min-width:105px">Failure</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="dim">Integer division</td>
+          <td><code>5 / 2</code></td>
+          <td><code>2.5</code> — result is a double</td>
+          <td><code>2</code> — result is a bigint</td>
+          <td><strong style="color:var(--delta)">Silent</strong></td>
+        </tr>
+        <tr>
+          <td class="dim">NULL ordering default</td>
+          <td><code>ORDER BY score DESC LIMIT 10</code></td>
+          <td>DESC → NULLs last</td>
+          <td>DESC → NULLs first</td>
+          <td><strong style="color:var(--delta)">Silent</strong> — a top-10 of NULLs</td>
+        </tr>
+        <tr>
+          <td class="dim">Cast failure</td>
+          <td><code>WHERE CAST(x AS INT) &gt; 5</code></td>
+          <td>Non-ANSI mode: bad values → NULL, row dropped</td>
+          <td>Throws on the first bad value</td>
+          <td><strong style="color:var(--warn)">Mixed</strong> — silent one side</td>
+        </tr>
+        <tr>
+          <td class="dim">Decimal arithmetic</td>
+          <td><code>SUM(price * qty) / COUNT(*)</code></td>
+          <td>Its own precision/scale propagation and rounding</td>
+          <td>Different propagation rules</td>
+          <td><strong style="color:var(--delta)">Silent</strong> — last-digit drift</td>
+        </tr>
+        <tr>
+          <td class="dim">Timestamp semantics</td>
+          <td><code>date_trunc('day', ts)</code></td>
+          <td><code>TIMESTAMP</code> is session-timezone dependent</td>
+          <td><code>TIMESTAMP</code> and <code>TIMESTAMP WITH TIME ZONE</code> are distinct types</td>
+          <td><strong style="color:var(--delta)">Silent</strong> — off-by-one day</td>
+        </tr>
+        <tr>
+          <td class="dim">Argument case</td>
+          <td><code>date_trunc('MONTH', ts)</code></td>
+          <td>Unit is case-insensitive</td>
+          <td>Requires lowercase</td>
+          <td><strong style="color:var(--iceberg)">Loud</strong></td>
+        </tr>
+        <tr>
+          <td class="dim">Function signature</td>
+          <td><code>date_add(…)</code></td>
+          <td><code>date_add(start, days)</code></td>
+          <td><code>date_add(unit, n, ts)</code></td>
+          <td><strong style="color:var(--iceberg)">Loud</strong></td>
+        </tr>
+        <tr>
+          <td class="dim">Identifier folding</td>
+          <td><code>SELECT Amount FROM t</code></td>
+          <td>Case-insensitive resolution; backtick quoting</td>
+          <td>Unquoted folds to lowercase; double-quote quoting</td>
+          <td><strong style="color:var(--iceberg)">Loud</strong></td>
+        </tr>
+        <tr>
+          <td class="dim">Regex flavour</td>
+          <td><code>regexp_extract(s, '(?=…)')</code></td>
+          <td><code>java.util.regex</code> — lookahead, backreferences</td>
+          <td>RE2J — neither supported</td>
+          <td><strong style="color:var(--warn)">Mixed</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The loud failures are the good outcome: someone sees a stack trace and fixes the view. The four silent rows are the argument for solving this in the catalog rather than by convention — nothing downstream will tell you the two engines disagreed.</p>
+
+  <div class="prose" style="margin-top:26px">
+    <h3>What the catalog can do about it</h3>
+    <p>The Iceberg view specification carries four things that, together, turn silent divergence into a loud one. Dialect tagging is only the first and least interesting of them.</p>
+  </div>
+
+  <div class="codes">
+    <div>
+      <p class="cap g">An Iceberg view, as the catalog stores it</p>
+<pre class="good">{
+  "view-uuid": "fa2b…", "format-version": 1,
+  "current-version-id": 4,
+  "versions": [{
+    "version-id": 4,
+    "timestamp-ms": 1757300000000,
+    "schema-id": 2,
+
+    <span class="c">// ② unqualified names resolve identically for every reader,
+    //    regardless of the reading session's USE statement</span>
+    <span class="g">"default-catalog":   "lake",
+    "default-namespace": ["finance"]</span>,
+
+    <span class="c">// ① one text per dialect. An engine takes its own, or refuses —
+    //    it never reinterprets another engine's SQL</span>
+    "representations": [
+      { "type": "sql", <span class="g">"dialect": "spark"</span>,
+        "sql": "SELECT id, amount / qty AS unit_price FROM orders" },
+      { "type": "sql", <span class="g">"dialect": "trino"</span>,
+        "sql": "SELECT id, CAST(amount AS DOUBLE) / qty AS unit_price FROM orders" }
+    ]
+  }],
+
+  <span class="c">// ③ the resolved output schema, stored alongside. The engine compares
+  //    its own parse against this and fails on mismatch — which is what
+  //    catches the SILENT class: had the Trino text kept integer division,
+  //    unit_price would resolve as bigint and the load would be rejected.</span>
+  <span class="g">"schemas": [{ "schema-id": 2, "fields": [
+      { "id": 1, "name": "id",         "type": "long"   },
+      { "id": 2, "name": "unit_price", "type": "double" } ]}]</span>,
+
+  <span class="c">// ④ views are versioned like tables — an edit is a new version,
+  //    not a mutation, so a bad change is revertible and auditable</span>
+  "version-log": [{ "version-id": 3, "timestamp-ms": … }, …]
+}</pre>
+    </div>
+    <div>
+      <p class="cap r">The same view in Glue, and the Athena special case</p>
+<pre class="bad">{ "TableType": "VIRTUAL_VIEW",
+  "ViewOriginalText": "SELECT id, amount / qty AS unit_price FROM orders",
+  "ViewExpandedText": "…",
+  "StorageDescriptor": { "Columns": [ … ] } }
+
+<span class="c"># No dialect tag: whoever reads it guesses, using its own parser.
+# The Columns list exists but nothing verifies the parse against it.
+# No default namespace: "orders" means whatever the reader's session says.
+# No versioning: an edit overwrites, and the previous text is gone.</span>
+
+<span class="c"># And the case people hit first — Athena does not store portable SQL
+# at all. It stores a base64 Presto/Trino plan inside a comment:</span>
+"ViewOriginalText":
+  "<span class="r">/* Presto View: eyJvcmlnaW5hbFNxbCI6IlNFTEVDVCBpZC…</span> */"
+
+<span class="c"># Spark reading this Glue table sees a VIRTUAL_VIEW whose text is a
+# comment, and fails outright. An Athena-authored view is not merely
+# dialect-divergent from Spark — it is invisible to it.</span></pre>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:26px">
+    <h3>The mitigation ladder</h3>
+    <p>In descending order of preference. Most organisations are on rung 4 without having decided to be.</p>
+    <ul class="tight">
+      <li><strong>1 · Iceberg views with per-dialect representations plus a stored schema.</strong> The only option that makes the silent class loud. Requires a catalog that implements the view spec — Polaris, Lakekeeper, Nessie, Unity Catalog; not Glue.</li>
+      <li><strong>2 · One dialect, and every other engine refuses.</strong> Strictly worse ergonomics, identical safety. Perfectly reasonable when one engine is dominant, and much better than rung 4.</li>
+      <li><strong>3 · Transpile at create time.</strong> Generate the other dialects with SQLGlot and store them all, so the divergence is resolved once by a tool rather than continuously by each engine. Pairs with rung 1; on its own it still needs somewhere to store the outputs.</li>
+      <li><strong>4 · One SQL text, every engine parses it as best it can.</strong> Where Hive and Glue leave you. Works until someone uses <code>/</code> on two integers.</li>
+      <li><strong>5 · Do not share views across engines — share tables.</strong> Materialise the logic into a table and let every engine read data instead of code. Costs storage and freshness, eliminates the problem entirely, and is the right answer more often than it gets credit for.</li>
+    </ul>
+    <p>The practical rule: <strong>a view crossing an engine boundary is code being executed by an interpreter you did not test against.</strong> Either the catalog is holding a per-dialect definition, or you have accepted that risk implicitly.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2 style="margin:0">Glue natively vs. Glue with Lake Formation</h2></div>
+  <div class="prose">
+    <p>"Glue" in these comparisons is ambiguous, and the ambiguity does real damage to the argument. The Glue Data Catalog on its own and the Glue Data Catalog governed by Lake Formation are different products with different security models — and most "Glue can't do X" claims are about the first while most vendor comparisons quietly score the second. Worth separating, because the gap between them is the largest single delta available to you without changing catalogs.</p>
+    <p>The short version: <strong>Lake Formation moves Glue from "IAM permissions on metadata" to "grants on data, enforced by vended credentials."</strong> That upgrade covers D5 and most of D6 and nothing else on the rubric.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th style="min-width:170px">Capability</th>
+        <th style="min-width:280px">Glue natively</th>
+        <th style="min-width:300px">Glue + Lake Formation</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="dim">Unit of authorization</td>
+          <td>IAM actions on catalog <em>metadata</em> — <code>glue:GetTable</code> on a table ARN. Says who may read the definition, not the data.</td>
+          <td>Grants in the catalog's own model on database, table, <strong>column</strong>, <strong>row</strong> and <strong>cell</strong>, against a data-lake principal.</td>
+        </tr>
+        <tr>
+          <td class="dim">Who controls data access</td>
+          <td>An entirely separate S3 bucket policy or instance role. Nothing connects it to the catalog grant.</td>
+          <td>Lake Formation, once the location is registered to it — the grant and the data access become the same decision.</td>
+        </tr>
+        <tr>
+          <td class="dim">Row &amp; column filtering</td>
+          <td>None.</td>
+          <td>Data cell filters: a row filter expression plus an included/excluded column list, per principal per table.</td>
+        </tr>
+        <tr>
+          <td class="dim">Attribute-based access</td>
+          <td>None beyond IAM resource tags, which do not understand columns.</td>
+          <td><strong>LF-Tags.</strong> Tag a database, table or column; grant on a tag expression. One grant covers every table that carries the tag, including ones created next year — the only part of this that scales past a few hundred tables.</td>
+        </tr>
+        <tr>
+          <td class="dim">Credential vending <span class="m" style="color:var(--muted)">D5</span></td>
+          <td><strong>None.</strong> Engines authenticate to S3 as themselves.</td>
+          <td><code>GetTemporaryGlueTableCredentials</code> issues short-lived, filtered, scoped credentials — this is the mechanism that makes the grants above real rather than advisory.</td>
+        </tr>
+        <tr>
+          <td class="dim">Cross-account sharing</td>
+          <td>Catalog resource policies. Coarse, and filters do not travel.</td>
+          <td>Named-resource and tag-based grants shared through AWS RAM, with row and column filters preserved across the account boundary.</td>
+        </tr>
+        <tr>
+          <td class="dim">Enforcement boundary</td>
+          <td>The S3 bucket policy, and nothing else.</td>
+          <td>LF-integrated engines only — Athena, Redshift Spectrum, EMR with LF enabled, Glue ETL. <em>See the caveat below.</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="codes two" style="margin-top:22px">
+    <div>
+      <p class="cap r">Native — two unrelated grants, and only one of them matters</p>
+<pre class="bad"><span class="c"># metadata: who may see the definition</span>
+{ "Effect": "Allow",
+  "Action": ["glue:GetTable", "glue:GetPartitions"],
+  "Resource": "arn:aws:glue:us-east-1:123:table/finance/orders" }
+
+<span class="c"># data: who actually reads the rows — declared
+# somewhere else entirely, by someone else,
+# with no reference to the catalog at all</span>
+{ "Effect": "Allow",
+  "Action": "s3:GetObject",
+  "Resource": <span class="r">"arn:aws:s3:::lake/finance/*"</span> }
+
+<span class="c"># Revoking the first changes nothing about
+# the second. This is why native Glue scores
+# D6 = 1: the controls exist, but not over data.</span></pre>
+    </div>
+    <div>
+      <p class="cap g">Lake Formation — one decision, vended</p>
+<pre class="good">lf.register_resource(
+    ResourceArn="arn:aws:s3:::lake/finance",
+    UseServiceLinkedRole=True)
+
+lf.create_data_cells_filter(TableData={
+  "DatabaseName": "finance", "TableName": "orders",
+  "Name": "eu_non_pii",
+  "RowFilter": {"FilterExpression": "region = 'EU'"},
+  "ColumnWildcard": {
+      "ExcludedColumnNames": ["ssn", "dob"]}})
+
+lf.grant_permissions(
+  Principal={"DataLakePrincipalIdentifier":
+             "arn:aws:iam::123:role/analyst"},
+  Resource={"DataCellsFilter": {
+      "DatabaseName": "finance", "TableName": "orders",
+      "Name": "eu_non_pii"}},
+  Permissions=["SELECT"])</pre>
+    </div>
+  </div>
+
+  <div class="codes" style="margin-top:16px">
+    <div>
+      <p class="cap g">LF-Tags — the part that actually scales</p>
+<pre class="good">lf.create_lf_tag(TagKey="sensitivity", TagValues=["public", "pii", "restricted"])
+
+lf.add_lf_tags_to_resource(
+    Resource={"TableWithColumns": {"DatabaseName": "finance", "TableName": "orders",
+                                   "ColumnNames": ["ssn", "dob"]}},
+    LFTags=[{"TagKey": "sensitivity", "TagValues": ["pii"]}])
+
+lf.grant_permissions(
+    Principal={"DataLakePrincipalIdentifier": "arn:aws:iam::123:role/analyst"},
+    Resource={"LFTagPolicy": {"ResourceType": "TABLE",
+        "Expression": [{"TagKey": "sensitivity", "TagValues": ["public"]}]}},
+    Permissions=["SELECT"])
+
+<span class="c"># One grant. Covers every table tagged public — including tables that do not
+# exist yet. The closest thing in the AWS stack to Unity Catalog's ABAC model.</span></pre>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:26px">
+    <h3>The caveat that decides whether any of it holds</h3>
+    <p>Lake Formation's guarantees are conditional on nobody being able to reach the objects directly. If an analyst's role retains <code>s3:GetObject</code> on the warehouse prefix, every filter above is decoration — and Lake Formation's own <em>hybrid access mode</em>, which exists precisely so that IAM-based access keeps working during migration, is the most common way this stays true for years.</p>
+  </div>
+
+  <div class="codes">
+    <div>
+      <p class="cap">The bucket policy that makes the grants enforceable</p>
+<pre>{ "Effect": "Deny", "Principal": "*", "Action": "s3:*",
+  "Resource": ["arn:aws:s3:::lake/finance", "arn:aws:s3:::lake/finance/*"],
+  "Condition": { "StringNotEquals": { "aws:PrincipalArn": [
+      "arn:aws:iam::123:role/LakeFormationServiceRole",
+      "arn:aws:iam::123:role/lf-registration-role" ] } } }
+
+<span class="c"># Until this exists, Lake Formation is an advisory layer. Two questions settle
+# a real deployment: is the prefix denied to everything but the LF role, and is
+# hybrid access mode off for these tables?</span></pre>
+    </div>
+  </div>
+
+  <div class="prose" style="margin-top:26px">
+    <h3>Where the scores move — and where they don't</h3>
+  </div>
+  <div class="scroller">
+    <table>
+      <thead><tr><th style="min-width:200px">Dimension</th><th style="min-width:110px">Native</th><th style="min-width:110px">+ LF</th><th style="min-width:340px">Why</th></tr></thead>
+      <tbody>
+        <tr><td class="dim">D5 · Credential vending</td><td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td>Real vending, capped at 2 because it only reaches LF-integrated engines — an arbitrary Spark job cannot obtain vended credentials the way an IRC client can.</td></tr>
+        <tr><td class="dim">D6 · Fine-grained authz</td><td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td>Row, column, cell and tag-based grants. Capped at 2 for the bypass surface above, not for missing features.</td></tr>
+        <tr><td class="dim">D11 · Federation</td><td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td>Cross-account sharing through RAM with filters intact is a genuine federation story within AWS.</td></tr>
+        <tr><td class="dim">D13 · Compute reach</td><td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td><td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div></td><td><strong>Backwards.</strong> Native Glue serves any engine anywhere over SigV4. Once enforcement depends on Lake Formation, arbitrary compute either bypasses the policy or cannot obtain credentials — you trade reach for a boundary. A defensible trade, but a trade.</td></tr>
+        <tr><td class="dim">D1 · Identity, D3 · Multi-table txn, D7 · Lineage, D8 · Views, D9 · Non-table assets, D10 · Lifecycle, D12 · Exit</td><td colspan="2" style="text-align:center"><span class="m" style="color:var(--muted)">unchanged</span></td><td>Lake Formation is an authorization layer. It adds no identity model, no transactions, no lineage, no view portability, no volumes or models, no maintenance, and its own policy model is one more thing that cannot be exported.</td></tr>
+        <tr><td class="dim">D2 · Commit authority</td><td colspan="2" style="text-align:center"><span class="m" style="color:var(--delta)">unchanged — and this is the point</span></td><td>Lake Formation is entirely orthogonal to the commit path. It does not make Glue a Delta commit coordinator, and it was never going to: that gap is in the Delta protocol's relationship to the catalog, not in Glue's permissions model.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Net: Lake Formation is worth adopting and closes the most dangerous gap in native Glue — but it moves three dimensions out of thirteen, costs you a fourth, and touches none of the ones that drive the format decision.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2 style="margin:0">Glue vs. Unity Catalog vs. Horizon</h2></div>
+  <div class="prose">
+    <p>One disentangling first, because these three names get used interchangeably and the substitution changes the conclusion. Apache Polaris, Snowflake Open Catalog and Snowflake Horizon Catalog are three different things sold adjacent to each other.</p>
+  </div>
+  <div class="split">
+    <div>
+      <h3>Apache Polaris · incubating</h3>
+      <p class="verdict ok">An open Iceberg catalog.</p>
+      <p>Apache-2, self-hostable, vendor-neutral governance. Iceberg REST commit authority, credential vending, RBAC, generic-table registration for other formats. No masking, no row policies, no classification, no lineage. Scored on its own in §07.</p>
+    </div>
+    <div>
+      <h3>Snowflake Open Catalog</h3>
+      <p class="verdict">Polaris, operated for you.</p>
+      <p>Snowflake's managed deployment of Polaris. Same API, same feature set, someone else's pager. Choosing it is an operational decision, not a governance one — and it is not Horizon.</p>
+    </div>
+    <div>
+      <h3>Snowflake Horizon Catalog</h3>
+      <p class="verdict no">A governance product.</p>
+      <p>Masking and row-access policies, object tagging, classification, lineage, access history, sharing — across Snowflake objects and the Iceberg tables it governs. Not an Iceberg REST catalog itself, and none of it ships with Polaris.</p>
+    </div>
+  </div>
+  <div class="prose">
+    <div class="callout delta">
+      <p><strong>Why the conflation matters.</strong> It supports exactly one wrong conclusion — "Horizon is open, because Polaris is Apache-2." Adopting Polaris gives you none of Horizon's governance; adopting Horizon does not make that governance portable to Polaris. They are a catalog and a governance product that share a vendor, and the openness of the first tells you nothing about your exposure to the second. The column below is Horizon proper.</p>
+    </div>
+
+    <h3>Which Snowflake table are we scoring?</h3>
+    <p>One more distinction before the table, because "Horizon" behaves differently over three kinds of object — and the axis people reach for, <em>Snowflake's storage versus your S3</em>, turns out to be the wrong one.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th style="min-width:220px">Table kind</th>
+        <th style="min-width:140px">Data lives in</th>
+        <th style="min-width:160px">Commit authority</th>
+        <th style="min-width:130px">Snowflake writes?</th>
+        <th style="min-width:230px">Readable by other engines?</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="dim">Native Snowflake table <span class="m" style="color:var(--muted)">FDN</span></td>
+          <td>Snowflake's storage</td>
+          <td>Snowflake</td>
+          <td>Yes</td>
+          <td><strong style="color:var(--delta)">No.</strong> Proprietary micro-partition format — reachable only through Snowflake, sharing, or an unload.</td>
+        </tr>
+        <tr>
+          <td class="dim">Snowflake-managed Iceberg</td>
+          <td><strong>Your S3</strong>, via an external volume</td>
+          <td>Snowflake</td>
+          <td>Yes</td>
+          <td><strong style="color:var(--iceberg)">Read, yes</strong> — through Snowflake's Iceberg catalog endpoint. Writes stay Snowflake's.</td>
+        </tr>
+        <tr>
+          <td class="dim">Externally-managed Iceberg <span class="m" style="color:var(--muted)">catalog-linked</span></td>
+          <td>Your S3</td>
+          <td><strong>Another catalog</strong> — Glue, Polaris, S3 Tables</td>
+          <td><strong style="color:var(--delta)">No — read-only</strong></td>
+          <td>Yes, fully — it was never Snowflake's table.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <div class="callout">
+      <p><strong>It was never about whose bucket.</strong> Snowflake-managed Iceberg tables already sit in your S3 — the external volume is not the thing that makes a table "external." The axis that actually determines behaviour is the same one this pair of notes is built on: <strong>who is the commit authority.</strong> Managed means Snowflake decides what version the table is at; externally-managed means someone else does and Snowflake is a reader.</p>
+    </div>
+    <p>That distinction moves seven of the thirteen scores. <strong>The Horizon column in the tables below and in §07 scores Snowflake-managed Iceberg</strong> — the most favourable and, for most teams evaluating this, the intended configuration.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th style="min-width:180px">Dimension</th>
+        <th style="min-width:200px">Native FDN</th>
+        <th style="min-width:230px">Snowflake-managed Iceberg</th>
+        <th style="min-width:240px">Externally-managed Iceberg</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="dim">D2 · Commit authority</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Snowflake, absolutely.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Snowflake, over an open format in your bucket.</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>The linked catalog decides. Snowflake cannot write at all — the most commonly misread row on this page.</td>
+        </tr>
+        <tr>
+          <td class="dim">D3 · Multi-table transactions</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Within Snowflake.</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>A read-only table cannot participate in a write transaction.</td>
+        </tr>
+        <tr>
+          <td class="dim">D5 · Credential vending</td>
+          <td><span class="m" style="color:var(--muted)">n/a — no external path</span></td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Snowflake vends scoped credentials to external Iceberg clients.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Vending is the owning catalog's job, not Horizon's.</td>
+        </tr>
+        <tr>
+          <td class="dim">D7 · Lineage &amp; audit</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Complete, because every write went through Snowflake.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Writes by other engines are invisible to it. The graph has holes Snowflake cannot know it has.</td>
+        </tr>
+        <tr>
+          <td class="dim">D10 · Lifecycle services</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div></td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Automatic compaction and snapshot expiry on your bucket.</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>Snowflake will not maintain a table it does not own. Compaction returns to you — see §07, Gap 1.</td>
+        </tr>
+        <tr>
+          <td class="dim">D12 · Exit path <span class="m" style="color:var(--muted)">data</span></td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>Proprietary format. The exit is an unload and a reload.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div><strong>Open Iceberg in your own bucket</strong> — the exit is registering the metadata pointer into another catalog, the §03 D12 script.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Already yours; nothing to exit.</td>
+        </tr>
+        <tr>
+          <td class="dim">D13 · Compute reach</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>Snowflake compute only.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>External engines read through the Iceberg endpoint; writes stay Snowflake's; masks and row policies do not travel.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Any engine, read and write — precisely <em>because</em> Horizon is not the authority.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">D1, D4, D6, D8, D9 and D11 do not move. D6 is worth a word: policies apply to <em>Snowflake's</em> queries against all three kinds. What changes across the row is not whether Horizon governs the table, but who else can reach it — which is D13's argument arriving from a different direction.</p>
+
+  <div class="prose">
+    <div class="callout ice">
+      <p><strong>Read the last two rows together.</strong> D13 rises exactly as D2 falls. Externally-managed Iceberg gives you total compute freedom because Snowflake has no authority over it — and hands back compaction, and puts holes in the lineage. Snowflake-managed Iceberg buys governance, maintenance and complete lineage by making Snowflake the writer. There is no configuration that gives you both, and choosing is the actual decision in front of you.</p>
+      <p>Worth saying plainly, because it is the one thing most often assumed backwards: <strong>an externally-managed Iceberg table in Snowflake is read-only.</strong> "External table" does not mean "Snowflake governs it while other engines write it." It means Snowflake queries it and applies policies to its own queries, full stop.</p>
+    </div>
+  </div>
+  <div class="scroller">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:170px">Dimension</th>
+          <th style="min-width:250px">AWS Glue (+ Lake Formation)</th>
+          <th style="min-width:250px">Unity Catalog (Databricks)</th>
+          <th style="min-width:250px">Snowflake Horizon<br><span style="text-transform:none;letter-spacing:0;font-weight:400">over Snowflake-managed Iceberg</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">D1 · Identity &amp; namespace</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Hive-derived <code>db.table</code>; a catalog tier was retrofitted. Renames are shallow.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Three-level, UUID-backed, rename-safe.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Three-level, applied consistently across Snowflake objects and the Iceberg tables Horizon governs.</td>
+        </tr>
+        <tr>
+          <td class="dim">D2 · Commit authority <span class="m" style="color:var(--iceberg)">Iceberg</span></td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>Genuine CAS via <code>UpdateTable</code> + <code>VersionId</code>; REST endpoint since Dec 2024.</td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>Managed Iceberg tables, IRC read <em>and</em> write.</td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>For Snowflake-managed Iceberg tables Snowflake is the commit authority; for externally-managed ones it defers to the linked catalog. Either way commits are properly coordinated.</td>
+        </tr>
+        <tr>
+          <td class="dim">D2 · Commit authority <span class="m" style="color:var(--delta)">Delta</span></td>
+          <td><div class="sc"><span class="score dl s0"><i></i><i></i><i></i></span><b>0</b></div>Not on the commit path at all. The subject of this note.</td>
+          <td><div class="sc"><span class="score dl s3"><i></i><i></i><i></i></span><b>3</b></div>Catalog-managed commits; the reference implementation of the protocol feature.</td>
+          <td><div class="sc"><span class="score dl s1"><i></i><i></i><i></i></span><b>1</b></div>Delta arrives as consumed Delta Shares and catalog-linked databases, GA July 2026. A reader, not a commit authority.</td>
+        </tr>
+        <tr>
+          <td class="dim">D3 · Multi-table transactions</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>None. Governed Tables, the old attempt, was withdrawn.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Multiple statements across tables in one atomic commit — the payoff of owning commit ordering.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Full inside Snowflake; not across externally written Iceberg tables.</td>
+        </tr>
+        <tr>
+          <td class="dim">D4 · Open API surface</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>IRC-compliant, but SigV4 auth and AWS-specific extensions make portability partial.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>IRC plus open Delta commit APIs; the OSS server implements the same contract.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Horizon's own governance API is Snowflake-only. Open Iceberg access comes from the catalog layer beneath it — a separate product, whose openness Horizon does not inherit.</td>
+        </tr>
+        <tr>
+          <td class="dim">D5 · Credential vending</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Only through Lake Formation or S3 Tables. The plain Glue API vends nothing.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Temporary-credential API on all three clouds, path-scoped per request.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Scoped vending for governed Iceberg tables; Snowflake-managed tables vend through Snowflake.</td>
+        </tr>
+        <tr>
+          <td class="dim">D6 · Fine-grained authz</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>LF-Tags, row filters, column grants — but enforcement lives in the engine, and direct S3 access bypasses it unless every path is locked down.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>ANSI GRANTs, row filters, column masks, ABAC; enforced at the credential boundary.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Masking and row-access policies, object tagging, classification — Horizon's strongest area.</td>
+        </tr>
+        <tr>
+          <td class="dim">D7 · Lineage &amp; audit</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>CloudTrail for audit; lineage requires SageMaker Catalog / DataZone alongside.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Automatic column-level lineage; audit as queryable system tables.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Access History and lineage are long-standing Snowflake strengths.</td>
+        </tr>
+        <tr>
+          <td class="dim">D8 · Portable views</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Hive views; cross-engine semantics are unreliable.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Governed views with dialect handling across engines.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Strong inside Snowflake; Iceberg-view support outside it is younger.</td>
+        </tr>
+        <tr>
+          <td class="dim">D9 · Non-table assets</td>
+          <td><div class="sc"><span class="score s0"><i></i><i></i><i></i></span><b>0</b></div>Tables only.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Volumes, models, functions under one grant model.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Stages, functions, models — coverage is good, breadth slightly narrower.</td>
+        </tr>
+        <tr>
+          <td class="dim">D10 · Lifecycle services</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Automatic Iceberg compaction; S3 Tables adds expiry and cleanup. Nothing for Delta.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Predictive optimization across compaction, clustering and vacuum.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Automatic maintenance on managed Iceberg tables.</td>
+        </tr>
+        <tr>
+          <td class="dim">D11 · Federation</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Federated catalogs to Redshift, DynamoDB, HMS and others.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Lakehouse Federation, including mounting Glue and HMS.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Catalog-linked databases and external catalog federation.</td>
+        </tr>
+        <tr>
+          <td class="dim">D12 · Exit path</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Iceberg metadata is portable and the IRC endpoint is real; Lake Formation policy is not exportable.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Apache-2 OSS server under Linux Foundation, but the managed feature set leads it by a wide margin.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Table metadata is portable Iceberg and the catalog layer beneath can be swapped. Horizon's policies, tags, classifications and lineage are not portable — and the Apache-2 catalog underneath carries none of them.</td>
+        </tr>
+        <tr>
+          <td class="dim">D13 · Compute reach</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Native: any engine, anywhere, with AWS credentials. Drops to 2 once Lake Formation enforcement is required.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Reads open through IRC and the open Delta APIs; writes and the fine-grained policy layer lean toward Databricks compute.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Horizon's policies are enforced by Snowflake's engine. External compute reaching the same tables gets the underlying catalog's RBAC, not Horizon's masking.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Scores are a judgement call for platform-planning purposes, not a benchmark. The rows that should drive a decision are D2 and D12; the rest move slowly and converge over time.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2 style="margin:0">Polaris, scored — self-hosted and Snowflake-hosted</h2></div>
+  <div class="prose">
+    <p>Scoring Horizon alone understates the option that is actually open to you, because Horizon is the one of the three you cannot self-host. Polaris scored on the same thirteen dimensions, in both deployments, next to Horizon for reference.</p>
+    <p>The headline: <strong>the two Polaris columns are nearly identical, and that is the finding.</strong> Snowflake Open Catalog is the same software with someone else's pager attached — it moves availability and operations, and it does not move a single capability gap, because the gaps are in the product rather than in the deployment. Anyone arguing "we'll use managed Polaris so we don't have to build the missing pieces" has the model wrong.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:190px">Dimension</th>
+          <th style="min-width:230px">Apache Polaris · self-hosted</th>
+          <th style="min-width:230px">Snowflake Open Catalog</th>
+          <th style="min-width:210px">Snowflake Horizon<br><span style="text-transform:none;letter-spacing:0;font-weight:400">over Snowflake-managed Iceberg</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">D1 · Identity &amp; namespace</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Arbitrary-depth namespaces, catalogs as real objects, Iceberg table UUIDs survive rename.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Three-level across Snowflake objects and governed Iceberg.</td>
+        </tr>
+        <tr>
+          <td class="dim">D2 · Commit authority <span class="m" style="color:var(--iceberg)">Iceberg</span></td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>Server-side CAS on the metadata pointer through the IRC commit endpoint. Its core competence.</td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>Identical.</td>
+          <td><div class="sc"><span class="score ice s3"><i></i><i></i><i></i></span><b>3</b></div>Snowflake for managed tables; defers to the linked catalog otherwise.</td>
+        </tr>
+        <tr>
+          <td class="dim">D2 · Commit authority <span class="m" style="color:var(--delta)">Delta</span></td>
+          <td><div class="sc"><span class="score dl s1"><i></i><i></i><i></i></span><b>1</b></div>Generic tables register Delta — list, create, read, drop, plus shared grants. Not coordination.</td>
+          <td><div class="sc"><span class="score dl s1"><i></i><i></i><i></i></span><b>1</b></div>Same API surface; verify current availability on the managed service.</td>
+          <td><div class="sc"><span class="score dl s1"><i></i><i></i><i></i></span><b>1</b></div>Consumed Delta Shares and catalog-linked databases. A reader.</td>
+        </tr>
+        <tr>
+          <td class="dim">D3 · Multi-table transactions</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>The IRC spec defines a multi-table commit endpoint; coverage is partial and does not span formats. Not something you can add from outside.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Full inside Snowflake; not across externally written tables.</td>
+        </tr>
+        <tr>
+          <td class="dim">D4 · Open API surface</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>IRC plus an open management API, OAuth2 throughout. The reference implementation of the thing everyone else is compatible with.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Identical — the entire point of the managed offering.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Governance API is Snowflake-only.</td>
+        </tr>
+        <tr>
+          <td class="dim">D5 · Credential vending</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Scoped STS / Azure / GCP credentials per request, sub-scoped to the table prefix. Mature.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Scoped vending for governed tables.</td>
+        </tr>
+        <tr>
+          <td class="dim">D6 · Fine-grained authz</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Principal and catalog roles, privileges on catalog / namespace / table, inherited down the namespace, enforced at the vending boundary. <strong>No row filters, no column masks, no tag-based policy.</strong></td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Identical — hosting does not add a policy model.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Masking, row-access policies, tags, classification.</td>
+        </tr>
+        <tr>
+          <td class="dim">D7 · Lineage &amp; audit</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Catalog operations are logged. No lineage of any kind, and no queryable access history.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Operational monitoring is Snowflake's; the lineage gap is unchanged.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Access History and lineage — a long-standing strength.</td>
+        </tr>
+        <tr>
+          <td class="dim">D8 · Portable views</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Implements the Iceberg view spec — per-dialect representations and a stored schema, which is the mechanism §04 argues for. It stores dialects; it does not produce them.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Strong inside Snowflake; younger outside it.</td>
+        </tr>
+        <tr>
+          <td class="dim">D9 · Non-table assets</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Generic tables give a registration slot for non-Iceberg data. No volumes, no models, no governed functions.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Stages, functions, models.</td>
+        </tr>
+        <tr>
+          <td class="dim">D10 · Lifecycle services</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>None. Compaction, snapshot expiry, manifest rewriting and orphan cleanup are entirely yours.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div><strong>Also none.</strong> This is where "managed" is least managed — the service runs the catalog, not your tables.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Automatic maintenance on Snowflake-managed Iceberg.</td>
+        </tr>
+        <tr>
+          <td class="dim">D11 · Federation</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>External catalogs federate in — Glue, Hive Metastore, other IRC servers — under one namespace.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Identical.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Catalog-linked databases and external catalog federation.</td>
+        </tr>
+        <tr>
+          <td class="dim">D12 · Exit path</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>You already hold it. Apache-2, ASF governance, your database, your deployment.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div><strong>The best managed exit story on this page:</strong> leaving means deploying the same open-source software yourself, with no API change and no policy re-authoring — because there is little policy to re-author.</td>
+          <td><div class="sc"><span class="score s2"><i></i><i></i><i></i></span><b>2</b></div>Tables portable; policies, tags, classification and lineage are not.</td>
+        </tr>
+        <tr>
+          <td class="dim">D13 · Compute reach</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Any engine, anywhere, OAuth2, read and write, nothing of the vendor's on the query path.</td>
+          <td><div class="sc"><span class="score s3"><i></i><i></i><i></i></span><b>3</b></div>Identical. Note this is a genuine differentiator against Horizon, sold by the same company.</td>
+          <td><div class="sc"><span class="score s1"><i></i><i></i><i></i></span><b>1</b></div>Policies are enforced by Snowflake's engine; external compute gets the underlying catalog's RBAC.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Two columns differ on nothing but operations. The comparison that matters is Polaris (either deployment) against Horizon — a catalog with a weak governance plane versus a governance plane whose catalog you cannot host.</p>
+
+  <div class="prose" style="margin-top:34px">
+    <h2 style="font-size:1.5rem">What self-hosting Polaris means you build</h2>
+    <p>Five gaps, in descending order of how much they will cost you. Sizing is deliberately coarse — the useful signal is which of these is a weekend, which is a project, and which is a permanent team commitment.</p>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">Gap 1 · D10</span><h3>A table maintenance service</h3></div>
+    <p><strong>Permanent ownership. The largest hidden cost of self-hosting, by a wide margin.</strong> Iceberg tables degrade without compaction: small files accumulate from streaming writes, manifests grow, expired snapshots pin storage you are paying for, and orphaned files from failed commits are never collected. None of this is optional, and none of it is Polaris's job.</p>
+    <div class="codes">
+      <div>
+        <p class="cap">The primitives exist; the service around them does not</p>
+<pre>CALL lake.system.rewrite_data_files(
+       table   =&gt; 'finance.orders',
+       options =&gt; map('target-file-size-bytes','536870912',
+                      'max-concurrent-file-group-rewrites','4'));
+CALL lake.system.rewrite_manifests(table =&gt; 'finance.orders');
+CALL lake.system.expire_snapshots(table  =&gt; 'finance.orders',
+       older_than =&gt; TIMESTAMP '2026-08-08 00:00:00', retain_last =&gt; 5);
+CALL lake.system.remove_orphan_files(table =&gt; 'finance.orders',
+       older_than =&gt; TIMESTAMP '2026-09-01 00:00:00');
+
+<span class="c"># What turns four procedure calls into a service, and what you will actually write:
+#   · a per-table schedule driven by write volume, not a flat nightly cron
+#   · cluster sizing per table — a 40 TB fact table and a 2 GB dimension
+#     cannot share a compaction profile
+#   · concurrency limits: compaction competes for the same CAS as your writers
+#     and will lose, repeatedly, under load
+#   · retry-with-backoff on CommitFailedException, and a cap so a hot table
+#     does not spend the whole window losing
+#   · orphan-file safety: the older_than threshold MUST exceed your longest
+#     in-flight write, or you delete files a running commit is about to reference
+#   · metrics and alerting on file counts, manifest counts and snapshot age,
+#     because the failure mode is gradual and silent</span></pre>
+      </div>
+    </div>
+    <p style="max-width:68ch; font-size:0.92rem; color:var(--muted)">Expect weeks to a first working version and ongoing ownership thereafter. This is the line item people leave out of the build-vs-buy comparison, and it is usually larger than everything else on this list combined.</p>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">Gap 2 · D6</span><h3>Row and column-level policy</h3></div>
+    <p><strong>A project, plus a permanent second place where policy lives.</strong> Polaris authorizes at table granularity and enforces it properly at the credential-vending boundary — which is more than native Glue offers. What it has no concept of is a row filter or a column mask. Three ways to fill it, and none of them put the policy in the catalog:</p>
+    <ul class="tight" style="max-width:68ch; font-size:0.93rem">
+      <li><strong>Enforce in the engine.</strong> Trino with Open Policy Agent or Ranger, applying column masks and row filters at query time. Real and widely deployed. The cost is that policy now lives in the engine layer, so every engine needs its own integration and they must agree — precisely the fragmentation the rubric exists to detect.</li>
+      <li><strong>Materialize the policy.</strong> Option C from §03's D13: a filtered, masked table per audience, with Polaris granting on that and never on the base. Engine-agnostic, unbypassable, costs storage and freshness. Usually the right answer for external consumers.</li>
+      <li><strong>Extend Polaris.</strong> Its authorizer is pluggable, so a custom implementation is possible. Realistically this is upstream work, not a config change, and you would own a fork or a contribution cycle.</li>
+    </ul>
+    <div class="codes">
+      <div>
+        <p class="cap">Where the boundary actually sits with stock Polaris</p>
+<pre><span class="g"># enforceable: which principal may obtain credentials for which table</span>
+GRANT TABLE_READ_DATA ON TABLE finance.orders TO CATALOG ROLE analyst_ro;
+
+<span class="r"># not expressible anywhere in the catalog:</span>
+<span class="c">#   WHERE region = user_region()
+#   ssn → '***-**-' || right(ssn,4)</span>
+<span class="c"># If you need those, decide NOW whether they live in the engine or in the
+# data — deciding later means discovering they live in neither.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">Gap 3 · D7</span><h3>Lineage and a queryable audit trail</h3></div>
+    <p><strong>A service to run, not a configuration change.</strong> Polaris logs its own API calls; it has no lineage and no access history. The assembled equivalent is a standard stack, and it is somebody's job:</p>
+    <ul class="tight" style="max-width:68ch; font-size:0.93rem">
+      <li><strong>Lineage:</strong> the OpenLineage integrations for Spark, Trino, Flink and dbt, emitting into Marquez, DataHub or OpenMetadata. Column-level lineage requires the engine integrations that support it, so coverage will be uneven and you will know which pipelines are dark.</li>
+      <li><strong>Audit:</strong> ship Polaris request logs to your log platform and build the queries — who loaded which table, who was vended credentials for what, when grants changed. Vended credentials are the useful signal here: a credential issued for a table prefix is a much better proxy for "read this data" than a <code>GetTable</code> call.</li>
+      <li><strong>What you will not get:</strong> the closed loop. Databricks and Snowflake capture lineage because the engine and the catalog are the same product. Assembling it from OpenLineage means lineage is best-effort and depends on every engine cooperating.</li>
+    </ul>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">Gap 4 · D8</span><h3>Dialect generation for views</h3></div>
+    <p><strong>The smallest item here and the highest return.</strong> Polaris <em>stores</em> Iceberg views correctly — per-dialect representations and the resolved schema, which is the whole mechanism §04 argues for. It simply does not generate the dialects. A transpilation step in CI closes it:</p>
+    <div class="codes">
+      <div>
+<pre class="good">import sqlglot
+src = "SELECT id, amount / qty AS unit_price FROM finance.orders"
+
+reps = [{"type": "sql", "dialect": d,
+         "sql": sqlglot.transpile(src, read="spark", write=d)[0]}
+        for d in ("spark", "trino", "duckdb")]
+
+<span class="c"># store all three on the view, let each engine take its own, and let the
+# stored schema reject any parse that disagrees. Days of work, and it turns
+# the silent-divergence class from §04 into a loud one.</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">Gap 5 · D9</span><h3>Governed non-table assets — accept, don't build</h3></div>
+    <p><strong>Nothing worth building.</strong> If you need unstructured files and ML models under the same grant model as tables, Polaris is not that product and wrapping generic tables into a convention will not make it one. The honest position is to run a second governance plane for those assets and be explicit that it is a second plane — rather than building a thin abstraction that hides the seam until an audit finds it.</p>
+  </div>
+
+  <div class="dim-block">
+    <div class="dim-head"><span class="k">And</span><h3>The floor the rubric does not score</h3></div>
+    <p>Self-hosting also means the operational baseline, which no capability table captures: a highly-available relational store behind Polaris with backups and a tested restore, OAuth2/OIDC wired to your identity provider, TLS and certificate rotation, version upgrades against a catalog every query now depends on, and capacity planning for a service that is on the path of every table resolution in the estate. <strong>This is the whole of what Snowflake Open Catalog sells you</strong> — and, given that it is real work and the exit remains a supported open-source deployment of the identical software, that is a more reasonable trade than it first looks.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">08</span><h2 style="margin:0">Defining "supports both formats well"</h2></div>
+  <div class="prose">
+    <p>"Supports Delta and Iceberg" is claimed by nearly every catalog and means at least four different things. Six sub-dimensions, applied <em>per format</em>, separate them. A catalog supports a format <strong>well</strong> when it scores 2 or 3 on all six; anything with a zero on F1 or F2 is a metadata mirror for that format, whatever the marketing says.</p>
+    <ul class="tight">
+      <li><strong>F1 · Commit authority</strong> — the catalog serializes writes in that format.</li>
+      <li><strong>F2 · Safe concurrent multi-writer</strong> — without an external lock service or a single-writer constraint.</li>
+      <li><strong>F3 · Metadata service</strong> — the catalog returns table metadata, rather than a path the engine must then list.</li>
+      <li><strong>F4 · Governance parity</strong> — the same grants, masks and filters apply as to the other format.</li>
+      <li><strong>F5 · Engine reach</strong> — how many engines can write through the catalog's open API, not just read the files.</li>
+      <li><strong>F6 · Lifecycle ownership</strong> — compaction, expiry and cleanup are the catalog's job.</li>
+    </ul>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:200px">Catalog</th>
+          <th>Iceberg<br><span style="text-transform:none;letter-spacing:0">F1 F2 F3 F4 F5 F6</span></th>
+          <th>Delta<br><span style="text-transform:none;letter-spacing:0">F1 F2 F3 F4 F5 F6</span></th>
+          <th style="min-width:320px">What it actually is</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Open source</td></tr>
+        <tr>
+          <td class="dim">Unity Catalog OSS <span class="m" style="color:var(--muted)">Apache 2.0</span></td>
+          <td class="num m">3 3 3 2 3 1</td>
+          <td class="num m">3 3 3 2 2 1</td>
+          <td><strong>The only open catalog that is a commit authority for both.</strong> Delta via catalog-managed commits (first open implementation, 0.4.0); Iceberg via IRC read and write. Governance features lag the Databricks build substantially — you get the transaction plane, not the policy plane.</td>
+        </tr>
+        <tr>
+          <td class="dim">Apache Polaris <span class="m" style="color:var(--muted)">incubating</span></td>
+          <td class="num m">3 3 3 3 3 2</td>
+          <td class="num m">0 0 1 2 1 0</td>
+          <td>Best-in-class open Iceberg catalog: real credential vending, vendor-neutral RBAC, ASF governance, self-hostable — and separately available as Snowflake Open Catalog if you would rather not operate it. It carries none of Horizon's governance features. Delta arrives through the <em>generic tables</em> API — list, create, read, drop, plus shared grants. That is registration and unified access control, <em>not</em> commit coordination. Pair it with Delta's own conditional-write or catalog-managed path.</td>
+        </tr>
+        <tr>
+          <td class="dim">Lakekeeper <span class="m" style="color:var(--muted)">Apache 2.0, Rust</span></td>
+          <td class="num m">3 3 3 3 3 2</td>
+          <td class="num m">0 0 0 0 0 0</td>
+          <td>Fast, small, excellent operational ergonomics, strong vending and OPA-style authorization. Iceberg only, deliberately. The right answer if you consolidate on Iceberg.</td>
+        </tr>
+        <tr>
+          <td class="dim">Apache Gravitino</td>
+          <td class="num m">3 3 3 2 3 1</td>
+          <td class="num m">0 1 1 1 1 0</td>
+          <td>A federating metadata layer over Hive, Iceberg, Paimon, Hudi, filesets and models, with its own IRC server. Its strength is unifying catalogs you already have; Delta is the weakest of its connectors.</td>
+        </tr>
+        <tr>
+          <td class="dim">Project Nessie</td>
+          <td class="num m">3 3 3 1 3 1</td>
+          <td class="num m">0 0 0 0 0 0</td>
+          <td>Iceberg with git semantics — branches, tags, cross-table commits. Unmatched for multi-table isolation and CI-style data workflows; no Delta story and a thin governance model.</td>
+        </tr>
+        <tr>
+          <td class="dim">Hive Metastore</td>
+          <td class="num m">3 2 2 1 3 0</td>
+          <td class="num m">0 0 1 1 2 0</td>
+          <td>The incumbent that appears to support both and coordinates neither for Delta. Iceberg commits use its RDBMS lock; Delta uses it as a registry only — the same shape as Glue.</td>
+        </tr>
+        <tr class="grp"><td colspan="4">Managed — the same rubric, for comparison</td></tr>
+        <tr>
+          <td class="dim">AWS Glue <span class="m" style="color:var(--muted)">+ Lake Formation</span></td>
+          <td class="num m">3 3 3 2 3 2</td>
+          <td class="num m">0 0 1 1 2 0</td>
+          <td><strong>The widest split of any catalog here — and the reason this note exists.</strong> On Iceberg it scores with the best open catalogs: real CAS commit authority, a spec-compliant REST endpoint, and automatic compaction, expiry and orphan-file deletion via table optimizers. Governance parity is the one soft spot (F4 = 2), because Lake Formation's row and column controls are enforced engine-side rather than at a credential boundary. On Delta it is not a catalog at all: no commit authority (F1 = 0), no concurrent-writer safety (F2 = 0), metadata that is a location plus a schema copy nothing verifies (F3 = 1), and zero lifecycle services — <code>OPTIMIZE</code> and <code>VACUUM</code> remain yours. F5 = 2 only because Delta files are readable by many engines <em>despite</em> Glue, not through it.</td>
+        </tr>
+        <tr>
+          <td class="dim">Unity Catalog <span class="m" style="color:var(--muted)">Databricks</span></td>
+          <td class="num m">3 3 3 3 3 3</td>
+          <td class="num m">3 3 3 3 3 3</td>
+          <td>The only catalog scoring 3 across both formats today. Delta via catalog-managed commits, Iceberg via managed tables and IRC read/write, one governance model over both, predictive optimization on both. The cost is that most of what earns those scores lives in the managed build rather than the Apache-2 server — which is precisely the trade your team is weighing.</td>
+        </tr>
+        <tr>
+          <td class="dim">Snowflake Horizon <span class="m" style="color:var(--muted)">managed Iceberg</span></td>
+          <td class="num m">3 3 3 3 2 3</td>
+          <td class="num m">0 1 1 2 1 0</td>
+          <td>Mirror image of Glue's problem, with a far stronger governance plane. Iceberg is fully served, with masking, row policies, tagging, classification and lineage on top. Delta arrives read-side — consumed Delta Shares and catalog-linked databases, GA July 2026 — so it is a Delta <em>reader</em>, not a commit authority. F5 drops to 2 on the D13 point: engines outside Snowflake reach the tables but not the policies. Note that Apache Polaris is listed above as a separate open catalog, not as Horizon's open edition.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Delta support in this ecosystem is moving quickly — catalog-managed tables landed in Delta 4.1 and were hardened through 4.3 — so verify F1/F2 against current releases rather than against a comparison table, including this one.</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">09</span><h2 style="margin:0">Consolidated scores</h2></div>
+  <div class="prose">
+    <p>Every dimension summed, per format. Eleven dimensions are format-neutral; D2 (commit authority) and D10 (lifecycle) are assessed separately for Iceberg and Delta, giving thirteen scores of 0–3 in each column and a maximum of 39.</p>
+  </div>
+
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th style="min-width:225px">Catalog</th>
+        <th style="min-width:110px">Iceberg<br><span style="text-transform:none;letter-spacing:0;font-weight:400">/ 39</span></th>
+        <th style="min-width:110px">Delta<br><span style="text-transform:none;letter-spacing:0;font-weight:400">/ 39</span></th>
+        <th style="min-width:360px">What the total hides</th>
+      </tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Managed</td></tr>
+        <tr>
+          <td class="dim">Unity Catalog <span class="m" style="color:var(--muted)">Databricks</span></td>
+          <td class="num m"><strong>37</strong></td><td class="num m"><strong>37</strong></td>
+          <td>The only catalog strong on both, and the only one that loses points where you care most: D12 = 2 and D13 = 2. Its weakest two dimensions are exactly the two your lock-in question is about.</td>
+        </tr>
+        <tr>
+          <td class="dim">Snowflake Horizon <span class="m" style="color:var(--muted)">managed Iceberg</span></td>
+          <td class="num m"><strong>32</strong></td><td class="num m">27</td>
+          <td>A strong Iceberg score carried by governance, with D13 = 1 underneath it. Over externally-managed Iceberg the Iceberg total falls to roughly 24 — see §06.</td>
+        </tr>
+        <tr>
+          <td class="dim">Snowflake Open Catalog <span class="m" style="color:var(--muted)">managed Polaris</span></td>
+          <td class="num m"><strong>28</strong></td><td class="num m">25</td>
+          <td>Identical to self-hosted Polaris, because it is the same software. What you buy is the operational floor, not points.</td>
+        </tr>
+        <tr>
+          <td class="dim">AWS Glue <span class="m" style="color:var(--muted)">+ Lake Formation</span></td>
+          <td class="num m">21</td><td class="num m">16</td>
+          <td>+3 on Iceberg over native, and −1 on D13. The Delta column is the D2 problem, one layer up.</td>
+        </tr>
+        <tr>
+          <td class="dim">AWS Glue <span class="m" style="color:var(--muted)">native</span></td>
+          <td class="num m">18</td><td class="num m">13</td>
+          <td>A perfect D2 and D13 for Iceberg sitting on zeros for vending, transactions and non-table assets. The shape matters more than the number.</td>
+        </tr>
+        <tr class="grp"><td colspan="4">Open source</td></tr>
+        <tr>
+          <td class="dim">Apache Polaris <span class="m" style="color:var(--muted)">self-hosted</span></td>
+          <td class="num m"><strong>28</strong></td><td class="num m">25</td>
+          <td>Nine points behind Unity Catalog, and <strong>every one of the nine is an item on §07's build list</strong> — D6, D7, D9, D10. The gap is not mysterious; it is a backlog with a price.</td>
+        </tr>
+        <tr>
+          <td class="dim">Project Nessie</td>
+          <td class="num m">27</td><td class="num m">23</td>
+          <td>Scores unusually well on D3 because git-style branching gives genuine cross-table isolation. No Delta story at all.</td>
+        </tr>
+        <tr>
+          <td class="dim">Lakekeeper</td>
+          <td class="num m">26</td><td class="num m">22</td>
+          <td>Close to Polaris with a smaller operational footprint. The Delta column is neutral dimensions only — it does not serve Delta in any form.</td>
+        </tr>
+        <tr>
+          <td class="dim">Apache Gravitino</td>
+          <td class="num m">25</td><td class="num m">21</td>
+          <td>D11 = 3 is doing a lot of the work. Buy it for federating catalogs you already have, not as a primary authority.</td>
+        </tr>
+        <tr>
+          <td class="dim">Unity Catalog OSS</td>
+          <td class="num m">23</td><td class="num m"><strong>24</strong></td>
+          <td><strong>The only row where Delta scores above Iceberg</strong> — and the only open catalog above 20 in the Delta column. A modest total concealing the single capability nobody else has.</td>
+        </tr>
+        <tr>
+          <td class="dim">Hive Metastore</td>
+          <td class="num m">12</td><td class="num m">9</td>
+          <td>Included as the baseline everyone is migrating from. D2 = 3 on Iceberg is the only reason it is still standing.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose" style="margin-top:20px">
+    <div class="callout delta">
+      <p><strong>Read these as orientation, not as a ranking.</strong> The totals weight thirteen dimensions equally, and your decision does not. A catalog scoring 32 with D2 = 0 for the format you write is strictly worse for you than one scoring 22 with D2 = 3 — no quantity of governance features compensates for not being the commit authority. Three specific ways the arithmetic misleads:</p>
+      <ul class="tight" style="font-size:0.93rem; margin-top:10px">
+        <li><strong>D2 is not one point among thirteen; it is a gate.</strong> Score it first, and only compare totals among the catalogs that pass it for your format.</li>
+        <li><strong>D12 and D13 are the lock-in question and they are worth 6 points of 39</strong> — about 15% of a total that decides a multi-year commitment. If you weight anything, weight those.</li>
+        <li><strong>Open-source totals include gaps you can close; managed totals include gaps you cannot.</strong> Polaris's missing D7 is a project you could staff. Horizon's D13 = 1 is not something you can build your way out of.</li>
+      </ul>
+    </div>
+    <p>The one reading that does survive the arithmetic: <strong>the three highest Iceberg scores belong to three different bets</strong> — Unity Catalog buys capability and pays in D12/D13, Horizon buys governance and pays in D13, Polaris buys D12/D13 outright and pays in the four dimensions §07 costs out. There is no option that is simply better; there are three prices for the same set of features, and the question is which currency you would rather pay in.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-num">10</span><h2 style="margin:0">What this implies for the lock-in question</h2></div>
+  <div class="prose">
+    <p>The honest summary is that there is no open catalog today that is a first-class commit authority for both formats <em>and</em> has a governance plane comparable to Unity Catalog or Horizon. Three coherent positions exist; the incoherent one is trying to keep Delta and Iceberg equally first-class forever.</p>
+    <ul class="tight">
+      <li><strong>Converge on Iceberg.</strong> The catalog market has standardized on the Iceberg REST spec, which means the catalog becomes a swappable component — Glue today, Polaris or Lakekeeper tomorrow, with a metadata pointer as the migration unit. This is the strongest anti-lock-in position available, and it costs you the Delta-native tooling you already run.</li>
+      <li><strong>Make the catalog Delta's source of truth (Delta 4.1+).</strong> The option that did not exist eighteen months ago, and the one that most directly addresses the position you are actually in. Keep Delta as the write format; turn on <code>delta.feature.catalogManaged</code> so commit ordering moves out of the object store and into an open catalog implementing the Delta commit APIs; expose an Iceberg-compatible read surface through UniForm or Apache XTable for engines that want it. What it buys: your custom commit coordinator is retired, D2 goes from 0 to 3 without changing format, D3 becomes reachable for the first time, and the catalog can be an Apache-2 server you host. What it costs: a Delta 4.1+ floor across every writer, and today the mature implementation is Unity Catalog — so the openness is in the protocol rather than in a field of competing implementations.</li>
+      <li><strong>Split the planes deliberately.</strong> Open catalog as transaction authority, a separate governance/discovery layer above it. More moving parts, but it keeps the two lock-in surfaces independent — and governance is the one that is genuinely hard to leave, since policy models do not export.</li>
+    </ul>
+    <p>One framing worth carrying into the discussion: the vendor-neutral choice is <em>the open spec your catalog implements</em>, not the deployment model. Glue is AWS-proprietary but speaks IRC, so Iceberg tables in it are portable. Unity Catalog is Databricks-led but Apache-2 and self-hostable. The question to ask of any candidate is not "who runs it" but "if we turned this off on Friday, what would we have to rebuild on Monday" — and for every catalog on this page, the answer is the governance model, never the tables.</p>
+  </div>
+</section>
+<footer>
+  <p>Sources: <a href="https://delta.io/blog/2026-02-02-delta-catalog-managed-tables/">Delta catalog-managed tables</a> · <a href="https://delta.io/blog/2026-06-22-delta-4-3-release/">Delta 4.3 and the Unity Catalog Delta APIs</a> · <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html">S3 conditional writes</a> · <a href="https://delta.io/blog/2022-05-18-multi-cluster-writes-to-delta-lake-storage-in-s3/">Multi-cluster writes to Delta on S3</a> · <a href="https://docs.aws.amazon.com/glue/latest/dg/connect-glu-iceberg-rest.html">Glue Iceberg REST endpoint</a> · <a href="https://www.snowflake.com/en/blog/engineering/apache-polaris-supports-iceberg-delta-lake/">Polaris generic tables</a> · <a href="https://docs.databricks.com/aws/en/delta/catalog-commits">Databricks catalog commits</a></p>
+</footer>
+
+</div>
